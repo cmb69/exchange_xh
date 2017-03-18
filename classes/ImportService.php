@@ -84,7 +84,12 @@ class ImportService
      */
     private function getConstructedContent(SimpleXMLElement $page)
     {
-        return "<h{$page['level']}>{$page['heading']}</h{$page['level']}>\n{$page->content}";
+        if ($this->newSplitMode) {
+            $heading = "<!--XH_ml{$page['level']}:{$page['heading']}-->";
+        } else {
+            $heading = "<h{$page['level']}>{$page['heading']}</h{$page['level']}>";
+        }
+        return "$heading\n{$page->content}";
     }
 
     /**

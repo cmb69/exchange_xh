@@ -38,6 +38,11 @@ class ExportService
     private $menuLevels;
 
     /**
+     * @var bool
+     */
+    private $newSplitMode;
+
+    /**
      * @var object
      */
     private $pages;
@@ -58,6 +63,7 @@ class ExportService
 
         $this->xmlFilename = "{$pth['folder']['content']}content.xml";
         $this->menuLevels = (int) $cf['menu']['levels'];
+        $this->newSplitMode = isset($cf['headings']['show']);
         $this->pdRouter = $pd_router;
         include_once "{$pth['folder']['classes']}Pages.php";
         $this->pages = new XH_Pages();
@@ -124,7 +130,11 @@ class ExportService
      */
     private function getActualContent($pageIndex)
     {
-        $pattern = "/<h[1-{$this->menuLevels}][^>]*>.*?<\\/h[1-{$this->menuLevels}]>/";
+        if ($this->newSplitMode) {
+            $pattern = '<!--XH_ml[1-9]:.*?-->';
+        } else {
+            $pattern = "/<h[1-{$this->menuLevels}][^>]*>.*?<\\/h[1-{$this->menuLevels}]>/";
+        }
         $content = $this->pages->content($pageIndex);
         return ltrim(preg_replace($pattern, '', $content));
     }
