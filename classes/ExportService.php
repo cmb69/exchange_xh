@@ -25,7 +25,7 @@ use DOMDocument;
 use DOMElement;
 use XH_Pages;
 
-class Model
+class ExportService
 {
     /**
      * @var string

@@ -51,8 +51,8 @@ class MainAdminController
 
     public function exportAction()
     {
-        $model = new Model;
-        $model->export();
+        $exporter = new ExportService;
+        $exporter->export();
         header('Location: ' . CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal', true, 303);
         exit;
     }
