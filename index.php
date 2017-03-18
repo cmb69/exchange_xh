@@ -21,3 +21,4 @@
 
 $temp = new Exchange\Plugin;
 $temp->init();
+$temp = null;
