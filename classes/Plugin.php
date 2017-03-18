@@ -89,7 +89,7 @@ class Plugin
                 $this->handleMainAdministration();
                 break;
             default:
-                $o .= plugin_admin_common($this->admin, $this->action, $this->plugin);                
+                $o .= plugin_admin_common($this->admin, $this->action, $this->plugin);
         }
     }
 

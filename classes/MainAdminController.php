@@ -77,5 +77,5 @@ class MainAdminController
     public function importedAction()
     {
         echo XH_message('success', $this->lang['message_imported']);
-    }    
+    }
 }
