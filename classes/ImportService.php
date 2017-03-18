@@ -53,7 +53,6 @@ class ImportService
     {
         $root = simplexml_load_file($this->xmlFilename);
         $this->purgeContents();
-        $pages = array();
         foreach ($root->page as $page) {
             $this->createPage($page);
         }

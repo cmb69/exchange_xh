@@ -47,7 +47,7 @@ class Plugin
 
     public function __construct()
     {
-        global $admin, $action, $plugin, $exchange;
+        global $action, $plugin, $exchange;
 
         $this->admin = isset($_GET['admin']) ? $_GET['admin'] : (isset($_POST['admin']) ? $_POST['admin'] : null);
         $this->action = $action;
