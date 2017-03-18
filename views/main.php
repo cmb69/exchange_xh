@@ -1,4 +1,4 @@
-<h1>Exchange</h1>
+<h1>Exchange – <?=$this->text('menu_main')?></h1>
 <form action="<?=$this->url()?>" method="post">
     <input type="hidden" name="admin" value="<?=$this->admin()?>">
     <p>

@@ -35,10 +35,11 @@ class MainAdminController
 
     public function __construct()
     {
-        global $sn, $plugin_tx;
+        global $sn, $plugin_tx, $title;
 
         $this->scriptName = $sn;
         $this->lang = $plugin_tx['exchange'];
+        $title = XH_hsc($this->lang['menu_main']);
     }
 
     public function defaultAction()
