@@ -33,6 +33,11 @@ class Model
     private $xmlFilename;
 
     /**
+     * @var int
+     */
+    private $menuLevels;
+
+    /**
      * @var object
      */
     private $pages;
@@ -49,9 +54,10 @@ class Model
 
     public function __construct()
     {
-        global $pth, $pd_router;
+        global $pth, $cf, $pd_router;
 
         $this->xmlFilename = "{$pth['folder']['content']}content.xml";
+        $this->menuLevels = (int) $cf['menu']['levels'];
         $this->pdRouter = $pd_router;
         include_once "{$pth['folder']['classes']}Pages.php";
         $this->pages = new XH_Pages();
@@ -90,7 +96,7 @@ class Model
         $page->setAttribute('url', $this->pages->url($pageIndex));
         $page->appendChild($this->createPageDataElement($this->pdRouter->find_page($pageIndex)));
         $content = $this->document->createElement('content');
-        $cdata = $this->document->createCDATASection($this->pages->content($pageIndex));
+        $cdata = $this->document->createCDATASection($this->getActualContent($pageIndex));
         $content->appendChild($cdata);
         $page->appendChild($content);
         $children = $this->createPageElements($this->pages->children($pageIndex, false));
@@ -110,6 +116,17 @@ class Model
             $element->setAttribute($key, $value);
         }
         return $element;
+    }
+
+    /**
+     * @param int $pageIndex
+     * @return string
+     */
+    private function getActualContent($pageIndex)
+    {
+        $pattern = "/<h[1-{$this->menuLevels}][^>]*>.*?<\\/h[1-{$this->menuLevels}]>/";
+        $content = $this->pages->content($pageIndex);
+        return ltrim(preg_replace($pattern, '', $content));
     }
 
     private function save()

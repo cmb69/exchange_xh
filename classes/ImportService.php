@@ -69,7 +69,7 @@ class ImportService
     {
         global $c, $cl;
 
-        $c[] = (string) $page->content;
+        $c[] = $this->getConstructedContent($page);
         $cl++;
         $this->pdRouter->appendNewPage($this->getPageData($page));
         if (isset($page->page)) {
@@ -77,6 +77,14 @@ class ImportService
                 $this->createPage($child);
             }
         }
+    }
+
+    /**
+     * @return string
+     */
+    private function getConstructedContent(SimpleXMLElement $page)
+    {
+        return "<h{$page['level']}>{$page['heading']}</h{$page['level']}>\n{$page->content}";
     }
 
     /**
