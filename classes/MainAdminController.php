@@ -64,12 +64,17 @@ class MainAdminController
 
     public function importAction()
     {
-        header('Location: ' . CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal', true, 303);
-        exit;
+        $importer = new ImportService;
+        if ($importer->import()) {
+            header('Location: ' . CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal', true, 303);
+            exit;
+        } else {
+            echo XH_message('fail', $this->lang['message_import_failed']);
+        }
     }
 
     public function importedAction()
     {
-        echo XH_message('info', 'import is not yet implemented');
+        echo XH_message('success', $this->lang['message_imported']);
     }    
 }
