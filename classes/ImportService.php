@@ -31,15 +31,21 @@ class ImportService
     private $xmlFilename;
 
     /**
+     * @var bool
+     */
+    private $newSplitMode;
+
+    /**
      * @var object
      */
     private $pdRouter;
 
     public function __construct()
     {
-        global $pth, $pd_router;
+        global $pth, $cf, $pd_router;
 
         $this->xmlFilename = "{$pth['folder']['content']}content.xml";
+        $this->newSplitMode = isset($cf['headings']['show']);
         $this->pdRouter = $pd_router;
     }
 

@@ -131,7 +131,7 @@ class ExportService
     private function getActualContent($pageIndex)
     {
         if ($this->newSplitMode) {
-            $pattern = '<!--XH_ml[1-9]:.*?-->';
+            $pattern = '/<!--XH_ml[1-9]:.*?-->/';
         } else {
             $pattern = "/<h[1-{$this->menuLevels}][^>]*>.*?<\\/h[1-{$this->menuLevels}]>/";
         }
