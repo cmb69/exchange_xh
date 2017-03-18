@@ -69,6 +69,9 @@ class ExportService
         $this->pages = new XH_Pages();
     }
 
+    /**
+     * @return bool
+     */
     public function export()
     {
         $this->document = new DOMDocument('1.0', 'UTF-8');
@@ -78,7 +81,7 @@ class ExportService
         foreach ($pageElements as $pageElement) {
             $contents->appendChild($pageElement);
         }
-        $this->save();
+        return $this->save();
     }
 
     private function createPageElements($indexes)
@@ -139,9 +142,12 @@ class ExportService
         return ltrim(preg_replace($pattern, '', $content));
     }
 
+    /**
+     * @return bool
+     */
     private function save()
     {
         $this->document->formatOutput = true;
-        $this->document->save($this->xmlFilename);
+        return $this->document->save($this->xmlFilename) !== false;
     }
 }

@@ -53,9 +53,12 @@ class MainAdminController
     public function exportAction()
     {
         $exporter = new ExportService;
-        $exporter->export();
-        header('Location: ' . CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal', true, 303);
-        exit;
+        if ($exporter->export()) {
+            header('Location: ' . CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal', true, 303);
+            exit;
+        } else {
+            echo XH_message('fail', $this->lang['message_export_failed']);
+        }
     }
 
     public function exportedAction()

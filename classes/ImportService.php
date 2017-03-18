@@ -49,6 +49,9 @@ class ImportService
         $this->pdRouter = $pd_router;
     }
 
+    /**
+     * @return bool
+     */
     public function import()
     {
         $root = simplexml_load_file($this->xmlFilename);
