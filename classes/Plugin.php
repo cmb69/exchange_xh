@@ -23,6 +23,8 @@ namespace Exchange;
 
 class Plugin
 {
+    const VERSION = '@EXCHANGE_VERSION@';
+
     /**
      * @var string
      */
@@ -80,12 +82,28 @@ class Plugin
 
         $o .= print_plugin_admin('on');
         switch ($this->admin) {
+            case '':
+                $o .= (string) $this->prepareInfoView();
+                break;
             case 'plugin_main':
                 $this->handleMainAdministration();
                 break;
             default:
                 $o .= plugin_admin_common($this->admin, $this->action, $this->plugin);                
         }
+    }
+
+    /**
+     * @return View
+     */
+    private function prepareInfoView()
+    {
+        global $pth;
+
+        $view = new View('info');
+        $view->version = self::VERSION;
+        $view->logo = "{$pth['folder']['plugins']}exchange/exchange.png";
+        return $view;
     }
 
     private function handleMainAdministration()
