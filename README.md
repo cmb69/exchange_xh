@@ -1,6 +1,7 @@
 Exchange_XH – a CMSimple_XH plugin
 ======================================
 
+[![alpha: 1.0alpha1](https://img.shields.io/badge/alpha-1.0alpha1-red.svg)](https://github.com/cmb69/exchange_xh/releases/tag/1.0alpha1)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
 
 Copyright (c) 2017 Christoph M. Becker
