@@ -33,12 +33,18 @@ class MainAdminController
      */
     private $lang;
 
+    /**
+     * @var object
+     */
+    private $csrfProtector;
+
     public function __construct()
     {
-        global $sn, $plugin_tx, $title;
+        global $sn, $plugin_tx, $title, $_XH_csrfProtection;
 
         $this->scriptName = $sn;
         $this->lang = $plugin_tx['exchange'];
+        $this->csrfProtector = $_XH_csrfProtection;
         $title = XH_hsc($this->lang['menu_main']);
     }
 
@@ -47,11 +53,13 @@ class MainAdminController
         $view = new View('main');
         $view->url = "{$this->scriptName}?&exchange&edit";
         $view->admin = 'plugin_main';
+        $view->csrfToken = new HtmlString($this->csrfProtector->tokenInput());
         $view->render();
     }
 
     public function exportAction()
     {
+        $this->csrfProtector->check();
         $exporter = new ExportService;
         if ($exporter->export()) {
             header('Location: ' . CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal', true, 303);
@@ -68,6 +76,7 @@ class MainAdminController
 
     public function importAction()
     {
+        $this->csrfProtector->check();
         $importer = new ImportService;
         if ($importer->import()) {
             header('Location: ' . CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal', true, 303);

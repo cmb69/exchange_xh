@@ -1,6 +1,7 @@
 <h1>Exchange – <?=$this->text('menu_main')?></h1>
 <form action="<?=$this->url()?>" method="post">
     <input type="hidden" name="admin" value="<?=$this->admin()?>">
+    <?=$this->csrfToken()?>
     <p>
         <button name="action" value="export"><?=$this->text('label_export')?></button>
     </p>
