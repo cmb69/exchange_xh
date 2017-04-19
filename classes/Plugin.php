@@ -103,6 +103,8 @@ class Plugin
         $view = new View('info');
         $view->version = self::VERSION;
         $view->logo = "{$pth['folder']['plugins']}exchange/exchange.png";
+        $systemCheckService = new SystemCheckService;
+        $view->checks = $systemCheckService->getChecks();
         return $view;
     }
 

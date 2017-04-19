@@ -8,5 +8,14 @@ $plugin_tx['exchange']['message_exported']="Die aktuelle Content-Datei wurde exp
 $plugin_tx['exchange']['message_export_failed']="Der Inhalt konnte nicht exportiert werden!";
 $plugin_tx['exchange']['message_imported']="Der Inhalt wurde importiert.";
 $plugin_tx['exchange']['message_import_failed']="Der Inhalt konnte nicht importiert werden!";
+$plugin_tx['exchange']['syscheck_extension']="die PHP-Erweiterung '%s' geladen ist";
+$plugin_tx['exchange']['syscheck_fail']="Fehler";
+$plugin_tx['exchange']['syscheck_message']="Prüfe, dass %1\$s … %2\$s";
+$plugin_tx['exchange']['syscheck_phpversion']="die PHP-Version ≥ %s";
+$plugin_tx['exchange']['syscheck_success']="OK";
+$plugin_tx['exchange']['syscheck_title']="System-Prüfung";
+$plugin_tx['exchange']['syscheck_warning']="Warnung";
+$plugin_tx['exchange']['syscheck_writable']="'%s' schreibbar ist";
+$plugin_tx['exchange']['syscheck_xhversion']="die CMSimple_XH-Version ≥ %s";
 
 ?>
