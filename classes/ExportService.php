@@ -76,6 +76,7 @@ class ExportService
     {
         $this->document = new DOMDocument('1.0', 'UTF-8');
         $contents = $this->document->createElement('contents');
+        $contents->setAttribute('version', preg_replace('/^CMSimple_XH /', '', CMSIMPLE_XH_VERSION));
         $this->document->appendChild($contents);
         $pageElements = $this->createPageElements($this->pages->toplevels(false));
         foreach ($pageElements as $pageElement) {
