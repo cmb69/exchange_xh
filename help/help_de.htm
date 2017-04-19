@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<title>Exchange_XH – Handbuch</title>
+<link rel="stylesheet" type="text/css" href="./stylesheet.css">
+</head>
+
+<body>
+
+<article>
+<h1>Exchange_XH – Handbuch</h1>
+<img src="../exchange.png" class="logo" alt="Drehende Pfeile">
+<p>
+    Exchange_XH ermöglicht den Export und Import der Inhalte einer CMSimple_XH
+    Website nach beziehungsweise von XML. Dies kann nützlich für die Migration
+    zu und von anderen CMSen sein, und ebenfalls für die Migration zwischen
+    CMSimple_XH Versionen.
+</p>
+
+<nav id="nav">
+<h2>Inhaltsverzeichnis</h2>
+<ul>
+<li><a href="#notice">Wichtiger Hinweis</a></li>
+<li><a href="#requirements">Voraussetzungen</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#settings">Einstellungen</a></li>
+<li><a href="#usage">Verwendung</a></li>
+<li><a href="#limitations">Beschränkungen</a></li>
+<li><a href="#license">Lizenz</a></li>
+<li><a href="#credits">Danksagung</a></li>
+</ul>
+</nav>
+
+<section id="notice">
+<h2>Wichtiger Hinweis</h2>
+<p class="important">
+    Exchange_XH konnte bisher nicht in diversen Umgebungen getestet werden. Es
+    ist eine so genannte Beta-Version. Vorsicht bei der Verwendung!
+</p>
+</section>
+
+<section id="requirements">
+<h2>Voraussetzungen</h2>
+<p>
+    Exchange_XH ist ein Plugin für CMSimple_XH &ge; 1.6. Es bebötigt PHP &ge;
+    5.3.0 mit der DOM und SimpleXML Extension.
+</p>
+</section>
+
+<section id="installation">
+<h2>Installation</h2>
+<p>
+    Die Installation erfolgt wie bei vielen anderen CMSimple_XH-Plugins auch. Im
+    <a href="http://www.cmsimple-xh.org/wiki/doku.php/de:installation">
+    CMSimple_XH Wiki</a> finden sie ausführliche Hinweise.
+</p>
+<ol>
+<li class="important">
+    Sichern Sie die Daten auf Ihrem Server.
+</li>
+<li>
+    Entpacken Sie die ZIP-Datei auf Ihrem Computer.
+</li>
+<li>
+    Laden Sie das gesamte Verzeichnis exchange/ auf Ihren Server in das plugins/
+    Verzeichnis von CMSimple_XH hoch.
+</li>
+<li>
+    Vergeben Sie Schreibrechte für die Unterverzeichnisse css/ und languages/.
+</li>
+<li class="important">
+    Navigieren Sie zu <em>Plugins</em>→<em>Exchange</em> im
+    Administrationsbereich, und prüfen Sie, ob alle Voraussetzungen für den
+    Betrieb erfüllt sind.
+</li>
+</ol>
+</section>
+
+<section id="settings">
+<h2>Einstellungen</h2>
+<p>
+    Die Konfiguration des Plugins erfolgt wie bei vielen anderen
+    CMSimple_XH-Plugins auch im Administrationsbereich der Homepage. Wählen Sie
+    unter <em>Plugins</em> → <em>Exchange</em> aus.
+</p>
+<!--<p>
+    Sie können die Original-Einstellungen von Exchange_XH in der
+    <em>Konfiguration</em> ändern. Beim Überfahren der Hilfe-Icons mit der Maus
+    werden Hinweise zu den Einstellungen angezeigt.
+</p>-->
+<p>
+    Die Lokalisierung wird unter <em>Sprache</em> vorgenommen. Sie können die
+    Zeichenketten in Ihre eigene Sprache übersetzen, falls keine entsprechende
+    Sprachdatei zur Verfügung steht, oder sie entsprechend Ihren Anforderungen
+    anpassen.
+</p>
+<p>
+    Das Aussehen von Exchange_XH kann unter <em>Stylesheet</em> angepasst werden.
+</p>
+</section>
+
+<section id="usage">
+<h2>Verwendung</h2>
+<p>
+    Sie können den Inhalt der aktuellen Sprache in der Hauptadministration des
+    Plugin exportieren und importieren
+    (<em>Plugins</em>→<em>Import/Export</em>). Nach erfolgreichem Export
+    befindet sich die Datei <code>content.xml</code> im Content-Ordner der
+    aktuellen Sprache, gleich neben der <code>content.htm</code> Datei, aus der
+    exportiert wurde. Um fremde Inhalte zu importieren, müssen Sie eine Datei
+    <code>content.xml</code>, die ein entsprechendes Format haben muss, gleich
+    neben diejenige <code>content.htm</code> Datei platzieren, die Sie durch den
+    Import <em>überschreiben</em> lassen möchten (also legen Sie zuvor ein
+    Backup an).
+</p>
+<p>
+    Bei mehrsprachigen Websites muss der Inhalt jeder Sprache separat importiert
+    und exportiert werden.
+</p>
+<p>
+    Um zwischen CMSimple_XH Versionen zu migrieren, installieren Sie das Plugin
+    zunächst in der alten Version, und exportieren Sie die Inhalte aller
+    Sprachen. Dann muss das Plugin in der neuen Version installiert werden, die
+    zuvor exportierten Inhalte der Sprachen müssen an die passenden Stellen der
+    neuen Version kopiert werden, und alle Sprach-Inhalte müssen importiert
+    werden.
+</p>
+</section>
+
+<section id="limitations">
+<h2>Beschränkungen</h2>
+<p>
+    Zusätzliches Markup der Seitenüberschriften wird beim Export stillschweigend
+    entfernt.
+</p>
+</section>
+
+<section id="license">
+<h2>Lizenz</h2>
+<p>
+    Exchange_XH kann unter Einhaltung der <a
+    href="http://www.gnu.org/licenses/gpl.html">GPLv3</a> verwendet werden.
+</p>
+<p>
+    &copy; 2017 Christoph M. Becker
+</p>
+</section>
+
+<section id="credits">
+<h2>Danksagung</h2>
+<p>
+    Das Pluginlogo wurde von <a
+    href="http://dellustrations.com/work_icons.html">Dellustrations</a>
+    gestaltet. Vielen Dank für die Veröffentlichung dieses Icons als Freeware.
+</p>
+<p>
+    Vielen Dank an die Gemeinschaft im <a
+    href="http://www.cmsimpleforum.com/">CMSimple_XH-Forum</a> für Tipps,
+    Anregungen und das Testen.
+</p>
+<p>
+    Zu guter Letzt vielen Dank an <a href="http://harteg.dk/">Peter Harteg</a>,
+    den "Vater" von CMSimple, und allen Entwicklern von <a
+    href="http://www.cmsimple-xh.org/">CMSimple_XH</a>, ohne die dieses
+    fantastische CMS nicht existieren würde.
+</p>
+</section>
+
+</article>
+
+</body>
+
+</html>
