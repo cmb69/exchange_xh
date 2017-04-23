@@ -42,10 +42,10 @@ class ImportService
 
     public function __construct()
     {
-        global $pth, $cf, $pd_router;
+        global $pth, $pd_router;
 
         $this->xmlFilename = "{$pth['folder']['content']}content.xml";
-        $this->newSplitMode = isset($cf['headings']['show']);
+        $this->newSplitMode = version_compare(CMSIMPLE_XH_VERSION, 'CMSimple_XH 1.7', 'ge');
         $this->pdRouter = $pd_router;
     }
 
@@ -80,9 +80,10 @@ class ImportService
     {
         global $c, $cl;
 
-        $c[] = $this->getConstructedContent($page);
+        $pageData = $this->getPageData($page);
+        $c[] = $this->getConstructedContent($page, $pageData);
         $cl++;
-        $this->pdRouter->appendNewPage($this->getPageData($page));
+        $this->pdRouter->appendNewPage($pageData);
         if (isset($page->page)) {
             foreach ($page->page as $child) {
                 $this->createPage($child);
@@ -93,10 +94,16 @@ class ImportService
     /**
      * @return string
      */
-    private function getConstructedContent(SimpleXMLElement $page)
+    private function getConstructedContent(SimpleXMLElement $page, array &$pageData)
     {
         if ($this->newSplitMode) {
-            $heading = "<!--XH_ml{$page['level']}:{$page['heading']}-->";
+            if ((string) $pageData['show_heading']) {
+                $name = $pageData['heading'];
+            } else {
+                $name = $page['heading'];
+            }
+            unset($pageData['show_heading'], $pageData['heading']);
+            $heading = "<!--XH_ml{$page['level']}:{$page['heading']}-->\n<h1>$name</h1>";
         } else {
             $heading = "<h{$page['level']}>{$page['heading']}</h{$page['level']}>";
         }
