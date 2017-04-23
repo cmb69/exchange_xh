@@ -103,11 +103,27 @@ class ImportService
                 $name = $page['heading'];
             }
             unset($pageData['show_heading'], $pageData['heading']);
+            $pageData['publication_date'] = $this->normalizeDateTime($pageData['publication_date']);
+            $pageData['expires'] = $this->normalizeDateTime($pageData['expires']);
             $heading = "<!--XH_ml{$page['level']}:{$page['heading']}-->\n<h1>$name</h1>";
         } else {
             $heading = "<h{$page['level']}>{$page['heading']}</h{$page['level']}>";
         }
         return "$heading\n{$page->content}";
+    }
+
+    /**
+     * @param string $value
+     * @return string
+     */
+    private function normalizeDateTime($value)
+    {
+        $timestamp = strtotime($value);
+        if ($timestamp === false) {
+            return $value;
+        } else {
+            return date('Y-m-d\TH:i', $timestamp);
+        } 
     }
 
     /**
