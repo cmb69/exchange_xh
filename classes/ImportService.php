@@ -55,6 +55,9 @@ class ImportService
     public function import()
     {
         $root = simplexml_load_file($this->xmlFilename);
+        if (!$root) {
+            return false;
+        }
         $this->purgeContents();
         foreach ($root->page as $page) {
             $this->createPage($page);
