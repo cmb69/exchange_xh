@@ -123,7 +123,7 @@ class ImportService
             return $value;
         } else {
             return date('Y-m-d\TH:i', $timestamp);
-        } 
+        }
     }
 
     /**
