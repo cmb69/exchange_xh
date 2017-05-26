@@ -50,10 +50,12 @@ class MainAdminController
 
     public function defaultAction()
     {
+        $service = new ExchangeService;
         $view = new View('main');
         $view->url = "{$this->scriptName}?&exchange&edit";
         $view->admin = 'plugin_main';
         $view->csrfToken = new HtmlString($this->csrfProtector->tokenInput());
+        $view->hasXmlFile = file_exists($service->getXmlFilename());
         $view->render();
     }
 

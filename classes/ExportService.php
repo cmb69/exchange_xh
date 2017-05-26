@@ -25,13 +25,8 @@ use DOMDocument;
 use DOMElement;
 use XH_Pages;
 
-class ExportService
+class ExportService extends ExchangeService
 {
-    /**
-     * @var string
-     */
-    private $xmlFilename;
-
     /**
      * @var int
      */
@@ -61,7 +56,7 @@ class ExportService
     {
         global $pth, $cf, $pd_router;
 
-        $this->xmlFilename = "{$pth['folder']['content']}content.xml";
+        parent::__construct();
         $this->menuLevels = (int) $cf['menu']['levels'];
         $this->newSplitMode = isset($cf['headings']['show']);
         $this->pdRouter = $pd_router;

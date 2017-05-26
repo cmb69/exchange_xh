@@ -23,13 +23,8 @@ namespace Exchange;
 
 use SimpleXMLElement;
 
-class ImportService
+class ImportService extends ExchangeService
 {
-    /**
-     * @var string
-     */
-    private $xmlFilename;
-
     /**
      * @var bool
      */
@@ -42,9 +37,9 @@ class ImportService
 
     public function __construct()
     {
-        global $pth, $pd_router;
+        global $pd_router;
 
-        $this->xmlFilename = "{$pth['folder']['content']}content.xml";
+        parent::__construct();
         $this->newSplitMode = version_compare(CMSIMPLE_XH_VERSION, 'CMSimple_XH 1.7', 'ge');
         $this->pdRouter = $pd_router;
     }
