@@ -53,17 +53,6 @@
         <delete file="export.tar"/>
         <move todir="dist">
             <fileset dir="export">
-                <include name="classes/Plugin.php"/>
-                <include name="version.nfo"/>
-            </fileset>
-            <filterchain>
-                <replacetokens>
-                    <token key="EXCHANGE_VERSION" value="${version}"/>
-                </replacetokens>
-            </filterchain>
-        </move>
-        <move todir="dist">
-            <fileset dir="export">
                 <include name="views/*.php"/>
             </fileset>
             <filterchain>

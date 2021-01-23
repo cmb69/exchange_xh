@@ -23,7 +23,7 @@ namespace Exchange;
 
 class Plugin
 {
-    const VERSION = '@EXCHANGE_VERSION@';
+    const VERSION = '1.0';
 
     /**
      * @var string
