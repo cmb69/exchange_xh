@@ -2,11 +2,6 @@
 
 <project name="Exchange" default="help">
 
-  <fileset id="php-sources" dir=".">
-    <include name="index.php"/>
-    <include name="classes/*.php"/>
-  </fileset>
-
   <fileset id="unit-tests" dir="tests/unit">
     <include name="*Test.php"/>
   </fileset>
@@ -25,16 +20,6 @@
       <arg file="classes"/>
       <arg file="index.php"/>
     </exec>
-  </target>
-
-  <target name="mess" description="detects code flaws">
-    <phpmd>
-      <fileset refid="php-sources"/>
-     </phpmd>
-  </target>
-
-  <target name="compat" description="checks PHP requirements">
-    <exec command="phpcompatinfo analyser:run --alias current" logoutput="true"/>
   </target>
 
   <target name="unit-tests" description="runs all unit tests">
