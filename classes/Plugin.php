@@ -21,6 +21,7 @@
 
 namespace Exchange;
 
+use Plib\CsrfProtector;
 use Plib\Request;
 use Plib\SystemChecker;
 use Plib\View;
@@ -100,6 +101,7 @@ class Plugin
         global $o, $pth, $plugin_tx;
 
         $controller = new MainAdminController(
+            new CsrfProtector(),
             new ExchangeService($pth['folder']['content'] . "content.xml"),
             new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"])
         );

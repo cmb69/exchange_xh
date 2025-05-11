@@ -21,13 +21,14 @@
 
 namespace Exchange;
 
+use Plib\CsrfProtector;
 use Plib\Request;
 use Plib\Response;
 use Plib\View;
 
 class MainAdminController
 {
-    /** @var object */
+    /** @var CsrfProtector */
     private $csrfProtector;
 
     /** @var ExchangeService */
@@ -36,11 +37,11 @@ class MainAdminController
     /** @var View */
     private $view;
 
-    public function __construct(ExchangeService $exchangeService, View $view)
+    public function __construct(CsrfProtector $csrfProtector, ExchangeService $exchangeService, View $view)
     {
-        global $title, $_XH_csrfProtection;
+        global $title;
 
-        $this->csrfProtector = $_XH_csrfProtection;
+        $this->csrfProtector = $csrfProtector;
         $this->exchangeService = $exchangeService;
         $this->view = $view;
         $title = $this->view->plain("menu_main");
@@ -51,14 +52,16 @@ class MainAdminController
         return Response::create($this->view->render("main", [
             "url" => $request->url()->page("exchange")->with("edit")->relative(),
             "admin" => 'plugin_main',
-            "csrfToken" => $this->csrfProtector->tokenInput(),
+            "csrfToken" => $this->csrfProtector->token(),
             "hasXmlFile" => file_exists($this->exchangeService->getXmlFilename()),
         ]));
     }
 
-    public function exportAction(): Response
+    public function exportAction(Request $request): Response
     {
-        $this->csrfProtector->check();
+        if (!$this->csrfProtector->check($request->post("exchange_token"))) {
+            return Response::create("not authorized"); // TODO i18n
+        }
         $exporter = new ExportService($this->exchangeService->getXmlFilename());
         if ($exporter->export()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal');
@@ -72,9 +75,11 @@ class MainAdminController
         return Response::create($this->view->message("success", "message_exported"));
     }
 
-    public function importAction(): Response
+    public function importAction(Request $request): Response
     {
-        $this->csrfProtector->check();
+        if (!$this->csrfProtector->check($request->post("exchange_token"))) {
+            return Response::create("not authorized"); // TODO i18n
+        }
         $importer = new ImportService($this->exchangeService->getXmlFilename());
         if ($importer->import()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal');
