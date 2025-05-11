@@ -1,7 +1,15 @@
 <?php
 
+use Plib\View;
+
 if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 
+/**
+ * @var View $this
+ * @var string $logo
+ * @var string $version
+ * @var list<object{state:string,label:string,stateLabel:string}> $checks
+ */
 ?>
 
 <h1>Exchange</h1>
