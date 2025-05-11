@@ -97,9 +97,11 @@ class Plugin
 
     private function handleMainAdministration()
     {
-        global $o;
+        global $o, $pth, $plugin_tx;
 
-        $controller = new MainAdminController();
+        $controller = new MainAdminController(
+            new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"])
+        );
         $action = "{$this->action}Action";
         if (!method_exists($controller, $action)) {
             $action = 'defaultAction';

@@ -33,21 +33,23 @@ class MainAdminController
     /** @var object */
     private $csrfProtector;
 
-    public function __construct()
+    /** @var View */
+    private $view;
+
+    public function __construct(View $view)
     {
         global $plugin_tx, $title, $_XH_csrfProtection;
 
         $this->lang = $plugin_tx['exchange'];
         $this->csrfProtector = $_XH_csrfProtection;
         $title = XH_hsc($this->lang['menu_main']);
+        $this->view = $view;
     }
 
     public function defaultAction(Request $request): Response
     {
-        global $pth, $plugin_tx;
         $service = new ExchangeService;
-        $view = new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"]);
-        return Response::create($view->render("main", [
+        return Response::create($this->view->render("main", [
             "url" => $request->url()->page("exchange")->with("edit")->relative(),
             "admin" => 'plugin_main',
             "csrfToken" => $this->csrfProtector->tokenInput(),
