@@ -25,14 +25,10 @@ use SimpleXMLElement;
 
 class ImportService extends ExchangeService
 {
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $newSplitMode;
 
-    /**
-     * @var object
-     */
+    /** @var object */
     private $pdRouter;
 
     public function __construct()
@@ -44,10 +40,7 @@ class ImportService extends ExchangeService
         $this->pdRouter = $pd_router;
     }
 
-    /**
-     * @return bool
-     */
-    public function import()
+    public function import(): bool
     {
         $root = simplexml_load_file($this->xmlFilename);
         if (!$root) {
@@ -86,10 +79,7 @@ class ImportService extends ExchangeService
         }
     }
 
-    /**
-     * @return string
-     */
-    private function getConstructedContent(SimpleXMLElement $page, array &$pageData)
+    private function getConstructedContent(SimpleXMLElement $page, array &$pageData): string
     {
         if ($this->newSplitMode) {
             if ((string) $pageData['show_heading']) {
@@ -107,11 +97,7 @@ class ImportService extends ExchangeService
         return "$heading\n{$page->content}";
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
-    private function normalizeDateTime($value)
+    private function normalizeDateTime(string $value): string
     {
         $timestamp = strtotime($value);
         if ($timestamp === false) {
@@ -121,10 +107,7 @@ class ImportService extends ExchangeService
         }
     }
 
-    /**
-     * @return array
-     */
-    private function getPageData(SimpleXMLElement $page)
+    private function getPageData(SimpleXMLElement $page): array
     {
         $result = array();
         foreach ($page->pagedata->attributes() as $name => $value) {

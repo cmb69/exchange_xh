@@ -27,29 +27,19 @@ use XH\Pages;
 
 class ExportService extends ExchangeService
 {
-    /**
-     * @var int
-     */
+    /** @var int */
     private $menuLevels;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $newSplitMode;
 
-    /**
-     * @var object
-     */
+    /** @var object */
     private $pages;
 
-    /**
-     * @var DOMDocument
-     */
+    /** @var DOMDocument */
     private $document;
 
-    /**
-     * @var object
-     */
+    /** @var object */
     private $pdRouter;
 
     public function __construct()
@@ -64,10 +54,7 @@ class ExportService extends ExchangeService
         $this->pages = new Pages();
     }
 
-    /**
-     * @return bool
-     */
-    public function export()
+    public function export(): bool
     {
         $this->document = new DOMDocument('1.0', 'UTF-8');
         $contents = $this->document->createElement('contents');
@@ -89,11 +76,7 @@ class ExportService extends ExchangeService
         return $result;
     }
 
-    /**
-     * @param int $pageIndex
-     * @return DOMElement
-     */
-    private function createPageElement($pageIndex)
+    private function createPageElement(int $pageIndex): DOMElement
     {
         $page = $this->document->createElement('page');
         $page->setAttribute('heading', $this->pages->heading($pageIndex));
@@ -111,10 +94,7 @@ class ExportService extends ExchangeService
         return $page;
     }
 
-    /**
-     * @return DOMElement
-     */
-    private function createPageDataElement(array $pageData)
+    private function createPageDataElement(array $pageData): DOMElement
     {
         $element = $this->document->createElement('pagedata');
         foreach ($pageData as $key => $value) {
@@ -123,11 +103,7 @@ class ExportService extends ExchangeService
         return $element;
     }
 
-    /**
-     * @param int $pageIndex
-     * @return string
-     */
-    private function getActualContent($pageIndex)
+    private function getActualContent(int $pageIndex): string
     {
         if ($this->newSplitMode) {
             $pattern = '/<!--XH_ml[1-9]:.*?-->/';
@@ -138,10 +114,7 @@ class ExportService extends ExchangeService
         return ltrim(preg_replace($pattern, '', $content));
     }
 
-    /**
-     * @return bool
-     */
-    private function save()
+    private function save(): bool
     {
         $this->document->formatOutput = true;
         return $this->document->save($this->xmlFilename) !== false;

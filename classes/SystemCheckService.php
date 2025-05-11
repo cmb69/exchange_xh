@@ -23,14 +23,10 @@ namespace Exchange;
 
 class SystemCheckService
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $pluginFolder;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $lang;
 
     public function __construct()
@@ -41,9 +37,7 @@ class SystemCheckService
         $this->lang = $plugin_tx['exchange'];
     }
 
-    /**
-     * @return object[]
-     */
+    /** @return array<object> */
     public function getChecks()
     {
         return array(
@@ -56,11 +50,8 @@ class SystemCheckService
         );
     }
 
-    /**
-     * @param string $version
-     * @return object
-     */
-    private function checkPhpVersion($version)
+    /** @return object{state:string,label:string,stateLabel:string} */
+    private function checkPhpVersion(string $version)
     {
         $state = version_compare(PHP_VERSION, $version, 'ge') ? 'success' : 'fail';
         $label = sprintf($this->lang['syscheck_phpversion'], $version);
@@ -68,12 +59,8 @@ class SystemCheckService
         return (object) compact('state', 'label', 'stateLabel');
     }
 
-    /**
-     * @param string $extension
-     * @param bool $isMandatory
-     * @return object
-     */
-    private function checkExtension($extension, $isMandatory = true)
+    /** @return object{state:string,label:string,stateLabel:string} */
+    private function checkExtension(string $extension, bool $isMandatory = true)
     {
         $state = extension_loaded($extension) ? 'success' : ($isMandatory ? 'fail' : 'warning');
         $label = sprintf($this->lang['syscheck_extension'], $extension);
@@ -81,11 +68,8 @@ class SystemCheckService
         return (object) compact('state', 'label', 'stateLabel');
     }
 
-    /**
-     * @param string $version
-     * @return object
-     */
-    private function checkXhVersion($version)
+    /** @return object{state:string,label:string,stateLabel:string} */
+    private function checkXhVersion(string $version)
     {
         $state = version_compare(CMSIMPLE_XH_VERSION, "CMSimple_XH $version", 'ge') ? 'success' : 'fail';
         $label = sprintf($this->lang['syscheck_xhversion'], $version);
@@ -93,11 +77,8 @@ class SystemCheckService
         return (object) compact('state', 'label', 'stateLabel');
     }
 
-    /**
-     * @param string $folder
-     * @return object
-     */
-    private function checkWritability($folder)
+    /** @return object{state:string,label:string,stateLabel:string} */
+    private function checkWritability(string $folder)
     {
         $state = is_writable($folder) ? 'success' : 'warning';
         $label = sprintf($this->lang['syscheck_writable'], $folder);

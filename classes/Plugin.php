@@ -25,24 +25,16 @@ class Plugin
 {
     const VERSION = '1.1-dev';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $admin;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $action;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $plugin;
 
-    /**
-     * @var bool
-     */
+    /** @var bool */
     private $exchange;
 
     public function __construct()
@@ -67,10 +59,7 @@ class Plugin
         }
     }
 
-    /**
-     * @return bool
-     */
-    private function isAdministrationRequested()
+    private function isAdministrationRequested(): bool
     {
         return function_exists('XH_wantsPluginAdministration') && XH_wantsPluginAdministration('exchange')
             || $this->exchange;
@@ -93,10 +82,7 @@ class Plugin
         }
     }
 
-    /**
-     * @return View
-     */
-    private function prepareInfoView()
+    private function prepareInfoView(): View
     {
         global $pth;
 

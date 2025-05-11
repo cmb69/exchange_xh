@@ -23,9 +23,7 @@ namespace Exchange;
 
 class ExchangeService
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $xmlFilename;
 
     public function __construct()
@@ -35,10 +33,7 @@ class ExchangeService
         $this->xmlFilename = "{$pth['folder']['content']}content.xml";
     }
 
-    /**
-     * @return string
-     */
-    public function getXmlFilename()
+    public function getXmlFilename(): string
     {
         return $this->xmlFilename;
     }

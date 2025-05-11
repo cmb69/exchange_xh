@@ -23,75 +23,46 @@ namespace Exchange;
 
 class View
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $template;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $data = array();
 
-    /**
-     * @param string $template
-     */
-    public function __construct($template)
+    public function __construct(string $template)
     {
         $this->template = $template;
     }
 
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function __set($name, $value)
+    /** @param mixed $value */
+    public function __set(string $name, $value)
     {
         $this->data[$name] = $value;
     }
 
-    /**
-     * @param string $name
-     * @return string
-     */
-    public function __get($name)
+    public function __get(string $name): string
     {
         return $this->data[$name];
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function __isset($name)
+    public function __isset(string $name): bool
     {
         return isset($this->data[$name]);
     }
 
-    /**
-     * @param string $name
-     * @return string
-     */
-    public function __call($name, array $args)
+    public function __call(string $name, array $args): string
     {
         return $this->escape($this->data[$name]);
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         ob_start();
         $this->render();
         return ob_get_clean();
     }
     
-    /**
-     * @param string $key
-     * @return string
-     */
-    protected function text($key)
+    protected function text(string $key): string
     {
         global $plugin_tx;
 
@@ -100,11 +71,7 @@ class View
         return $this->escape(vsprintf($plugin_tx['exchange'][$key], $args));
     }
 
-    /**
-     * @param string $key
-     * @param int $count
-     */
-    protected function plural($key, $count)
+    protected function plural(string $key, int $count)
     {
         global $plugin_tx;
 
@@ -118,10 +85,7 @@ class View
         return $this->escape(vsprintf($plugin_tx['exchange'][$key], $args));
     }
 
-    /**
-     * @return void
-     */
-    public function render()
+    public function render(): void
     {
         global $pth;
 

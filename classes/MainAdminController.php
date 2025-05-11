@@ -23,19 +23,13 @@ namespace Exchange;
 
 class MainAdminController
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     private $scriptName;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     private $lang;
 
-    /**
-     * @var object
-     */
+    /** @var object */
     private $csrfProtector;
 
     public function __construct()
