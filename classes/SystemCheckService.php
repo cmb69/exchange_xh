@@ -47,7 +47,7 @@ class SystemCheckService
     public function getChecks()
     {
         return array(
-            $this->checkPhpVersion('5.3.0'),
+            $this->checkPhpVersion('7.1.0'),
             $this->checkExtension('DOM'),
             $this->checkExtension('SimpleXML'),
             $this->checkXhVersion('1.7.0'),
