@@ -22,13 +22,14 @@
 namespace Exchange;
 
 use SimpleXMLElement;
+use XH\PageDataRouter;
 
 class ImportService extends ExchangeService
 {
     /** @var bool */
     private $newSplitMode;
 
-    /** @var object */
+    /** @var PageDataRouter */
     private $pdRouter;
 
     public function __construct(string $xmlFilename)
@@ -53,7 +54,7 @@ class ImportService extends ExchangeService
         return XH_saveContents();
     }
 
-    private function purgeContents()
+    private function purgeContents(): void
     {
         global $c, $cl;
 
@@ -64,7 +65,7 @@ class ImportService extends ExchangeService
         $cl = 0;
     }
 
-    private function createPage(SimpleXMLElement $page)
+    private function createPage(SimpleXMLElement $page): void
     {
         global $c, $cl;
 
@@ -79,6 +80,7 @@ class ImportService extends ExchangeService
         }
     }
 
+    /** @param array<string,string> $pageData */
     private function getConstructedContent(SimpleXMLElement $page, array &$pageData): string
     {
         if ($this->newSplitMode) {
@@ -107,6 +109,7 @@ class ImportService extends ExchangeService
         }
     }
 
+    /** @return array<string,string> */
     private function getPageData(SimpleXMLElement $page): array
     {
         $result = array();

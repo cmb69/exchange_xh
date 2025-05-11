@@ -23,6 +23,7 @@ namespace Exchange;
 
 use DOMDocument;
 use DOMElement;
+use XH\PageDataRouter;
 use XH\Pages;
 
 class ExportService extends ExchangeService
@@ -33,13 +34,13 @@ class ExportService extends ExchangeService
     /** @var bool */
     private $newSplitMode;
 
-    /** @var object */
+    /** @var Pages */
     private $pages;
 
     /** @var DOMDocument */
     private $document;
 
-    /** @var object */
+    /** @var PageDataRouter */
     private $pdRouter;
 
     public function __construct(string $xmlFilename)
@@ -58,7 +59,7 @@ class ExportService extends ExchangeService
     {
         $this->document = new DOMDocument('1.0', 'UTF-8');
         $contents = $this->document->createElement('contents');
-        $contents->setAttribute('version', preg_replace('/^CMSimple_XH /', '', CMSIMPLE_XH_VERSION));
+        $contents->setAttribute('version', (string) preg_replace('/^CMSimple_XH /', '', CMSIMPLE_XH_VERSION));
         $this->document->appendChild($contents);
         $pageElements = $this->createPageElements($this->pages->toplevels(false));
         foreach ($pageElements as $pageElement) {
@@ -67,7 +68,11 @@ class ExportService extends ExchangeService
         return $this->save();
     }
 
-    private function createPageElements($indexes)
+    /**
+     * @param list<int> $indexes
+     * @return list<DOMElement>
+     */
+    private function createPageElements(array $indexes): array
     {
         $result = array();
         foreach ($indexes as $index) {
@@ -80,7 +85,7 @@ class ExportService extends ExchangeService
     {
         $page = $this->document->createElement('page');
         $page->setAttribute('heading', $this->pages->heading($pageIndex));
-        $page->setAttribute('level', $this->pages->level($pageIndex));
+        $page->setAttribute('level', (string) $this->pages->level($pageIndex));
         $page->setAttribute('url', $this->pages->url($pageIndex));
         $page->appendChild($this->createPageDataElement($this->pdRouter->find_page($pageIndex)));
         $content = $this->document->createElement('content');
@@ -94,6 +99,7 @@ class ExportService extends ExchangeService
         return $page;
     }
 
+    /** @param array<string,string> $pageData */
     private function createPageDataElement(array $pageData): DOMElement
     {
         $element = $this->document->createElement('pagedata');
@@ -111,7 +117,7 @@ class ExportService extends ExchangeService
             $pattern = "/<h[1-{$this->menuLevels}][^>]*>.*?<\\/h[1-{$this->menuLevels}]>/";
         }
         $content = $this->pages->content($pageIndex);
-        return ltrim(preg_replace($pattern, '', $content));
+        return ltrim((string) preg_replace($pattern, '', $content));
     }
 
     private function save(): bool

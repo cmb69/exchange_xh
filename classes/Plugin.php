@@ -36,23 +36,19 @@ class Plugin
     /** @var string */
     private $action;
 
-    /** @var string */
-    private $plugin;
-
     /** @var bool */
     private $exchange;
 
     public function __construct()
     {
-        global $action, $plugin, $exchange;
+        global $action, $exchange;
 
         $this->admin = isset($_GET['admin']) ? $_GET['admin'] : (isset($_POST['admin']) ? $_POST['admin'] : null);
         $this->action = $action;
-        $this->plugin = $plugin;
         $this->exchange = isset($exchange) ? true : false;
     }
 
-    public function init()
+    public function init(): void
     {
         if (XH_ADM) { // @phpstan-ignore-line
             if (function_exists('XH_registerStandardPluginMenuItems')) {
@@ -70,7 +66,7 @@ class Plugin
             || $this->exchange;
     }
 
-    private function handleAdministration()
+    private function handleAdministration(): void
     {
         global $o;
 
@@ -96,7 +92,7 @@ class Plugin
         return $controller();
     }
 
-    private function handleMainAdministration()
+    private function handleMainAdministration(): void
     {
         global $o, $pth, $plugin_tx;
 

@@ -35,7 +35,6 @@ class InfoController
     /** @var View */
     private $view;
 
-    /** @param array<string,string> */
     public function __construct(string $pluginFolder, SystemChecker $systemChecker, View $view)
     {
         $this->pluginFolder = $pluginFolder;
@@ -68,7 +67,7 @@ class InfoController
     /** @return object{state:string,label:string,stateLabel:string} */
     private function checkPhpVersion(string $version)
     {
-        $state = $this->systemChecker->checkVersion(PHP_VERSION, $version, 'ge') ? 'success' : 'fail';
+        $state = $this->systemChecker->checkVersion(PHP_VERSION, $version) ? 'success' : 'fail';
         $label = $this->view->plain("syscheck_phpversion", $version);
         $stateLabel = $this->view->plain("syscheck_$state");
         return (object) compact('state', 'label', 'stateLabel');
@@ -86,7 +85,7 @@ class InfoController
     /** @return object{state:string,label:string,stateLabel:string} */
     private function checkXhVersion(string $version)
     {
-        $state = $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $version", 'ge') ? 'success' : 'fail';
+        $state = $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $version") ? 'success' : 'fail';
         $label = $this->view->plain("syscheck_xhversion", $version);
         $stateLabel = $this->view->plain("syscheck_$state");
         return (object) compact('state', 'label', 'stateLabel');
