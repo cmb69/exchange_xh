@@ -31,11 +31,11 @@ class ImportService extends ExchangeService
     /** @var object */
     private $pdRouter;
 
-    public function __construct()
+    public function __construct(string $xmlFilename)
     {
         global $pd_router;
 
-        parent::__construct();
+        parent::__construct($xmlFilename);
         $this->newSplitMode = version_compare(CMSIMPLE_XH_VERSION, 'CMSimple_XH 1.7', 'ge');
         $this->pdRouter = $pd_router;
     }

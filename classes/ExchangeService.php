@@ -26,11 +26,9 @@ class ExchangeService
     /** @var string */
     protected $xmlFilename;
 
-    public function __construct()
+    public function __construct(string $xmlFilename)
     {
-        global $pth;
-
-        $this->xmlFilename = "{$pth['folder']['content']}content.xml";
+        $this->xmlFilename = $xmlFilename;
     }
 
     public function getXmlFilename(): string

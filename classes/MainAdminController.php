@@ -30,33 +30,36 @@ class MainAdminController
     /** @var object */
     private $csrfProtector;
 
+    /** @var ExchangeService */
+    private $exchangeService;
+
     /** @var View */
     private $view;
 
-    public function __construct(View $view)
+    public function __construct(ExchangeService $exchangeService, View $view)
     {
         global $title, $_XH_csrfProtection;
 
         $this->csrfProtector = $_XH_csrfProtection;
+        $this->exchangeService = $exchangeService;
         $this->view = $view;
         $title = $this->view->plain("menu_main");
     }
 
     public function defaultAction(Request $request): Response
     {
-        $service = new ExchangeService;
         return Response::create($this->view->render("main", [
             "url" => $request->url()->page("exchange")->with("edit")->relative(),
             "admin" => 'plugin_main',
             "csrfToken" => $this->csrfProtector->tokenInput(),
-            "hasXmlFile" => file_exists($service->getXmlFilename()),
+            "hasXmlFile" => file_exists($this->exchangeService->getXmlFilename()),
         ]));
     }
 
     public function exportAction(): Response
     {
         $this->csrfProtector->check();
-        $exporter = new ExportService;
+        $exporter = new ExportService($this->exchangeService->getXmlFilename());
         if ($exporter->export()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal');
         } else {
@@ -72,7 +75,7 @@ class MainAdminController
     public function importAction(): Response
     {
         $this->csrfProtector->check();
-        $importer = new ImportService;
+        $importer = new ImportService($this->exchangeService->getXmlFilename());
         if ($importer->import()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal');
         } else {

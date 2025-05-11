@@ -100,6 +100,7 @@ class Plugin
         global $o, $pth, $plugin_tx;
 
         $controller = new MainAdminController(
+            new ExchangeService($pth['folder']['content'] . "content.xml"),
             new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"])
         );
         $action = "{$this->action}Action";

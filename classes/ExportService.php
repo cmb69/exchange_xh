@@ -42,11 +42,11 @@ class ExportService extends ExchangeService
     /** @var object */
     private $pdRouter;
 
-    public function __construct()
+    public function __construct(string $xmlFilename)
     {
         global $pth, $cf, $pd_router;
 
-        parent::__construct();
+        parent::__construct($xmlFilename);
         $this->menuLevels = (int) $cf['menu']['levels'];
         $this->newSplitMode = isset($cf['headings']['show']);
         $this->pdRouter = $pd_router;
