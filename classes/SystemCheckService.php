@@ -50,7 +50,7 @@ class SystemCheckService
             $this->checkPhpVersion('5.3.0'),
             $this->checkExtension('DOM'),
             $this->checkExtension('SimpleXML'),
-            $this->checkXhVersion('1.6'),
+            $this->checkXhVersion('1.7.0'),
             $this->checkWritability("$this->pluginFolder/css/"),
             $this->checkWritability("$this->pluginFolder/languages/")
         );
