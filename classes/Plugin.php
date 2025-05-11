@@ -57,7 +57,7 @@ class Plugin
 
     public function init()
     {
-        if (XH_ADM) {
+        if (XH_ADM) { // @phpstan-ignore-line
             if (function_exists('XH_registerStandardPluginMenuItems')) {
                 XH_registerStandardPluginMenuItems(true);
             }
@@ -89,7 +89,7 @@ class Plugin
                 $this->handleMainAdministration();
                 break;
             default:
-                $o .= plugin_admin_common($this->admin, $this->action, $this->plugin);
+                $o .= plugin_admin_common();
         }
     }
 

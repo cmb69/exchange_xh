@@ -23,7 +23,7 @@ namespace Exchange;
 
 use DOMDocument;
 use DOMElement;
-use XH_Pages;
+use XH\Pages;
 
 class ExportService extends ExchangeService
 {
@@ -61,7 +61,7 @@ class ExportService extends ExchangeService
         $this->newSplitMode = isset($cf['headings']['show']);
         $this->pdRouter = $pd_router;
         include_once "{$pth['folder']['classes']}Pages.php";
-        $this->pages = new XH_Pages();
+        $this->pages = new Pages();
     }
 
     /**
