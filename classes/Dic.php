@@ -24,6 +24,7 @@ namespace Exchange;
 use Plib\CsrfProtector;
 use Plib\SystemChecker;
 use Plib\View;
+use XH\Pages;
 
 class Dic
 {
@@ -31,11 +32,17 @@ class Dic
 
     public static function mainAdminController(): MainAdminController
     {
-        global $pth;
+        global $pth, $cf, $pd_router;
         return new MainAdminController(
             new CsrfProtector(),
             new ExchangeService($pth["folder"]["content"] . "content.xml"),
-            new ExportService($pth["folder"]["content"] . "content.xml"),
+            new ExportService(
+                $pth["folder"]["content"] . "content.xml",
+                (int) $cf["menu"]["levels"],
+                isset($cf["headings"]["show"]),
+                new Pages(),
+                $pd_router
+            ),
             new ImportService($pth["folder"]["content"] . "content.xml"),
             self::view()
         );

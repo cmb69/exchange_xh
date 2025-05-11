@@ -43,15 +43,18 @@ class ExportService extends ExchangeService
     /** @var PageDataRouter */
     private $pdRouter;
 
-    public function __construct(string $xmlFilename)
-    {
-        global $cf, $pd_router;
-
+    public function __construct(
+        string $xmlFilename,
+        int $menuLevels,
+        bool $newSplitMode,
+        Pages $pages,
+        PageDataRouter $pdRouter
+    ) {
         parent::__construct($xmlFilename);
-        $this->menuLevels = (int) $cf['menu']['levels'];
-        $this->newSplitMode = isset($cf['headings']['show']);
-        $this->pdRouter = $pd_router;
-        $this->pages = new Pages();
+        $this->menuLevels = $menuLevels;
+        $this->newSplitMode = $newSplitMode;
+        $this->pdRouter = $pdRouter;
+        $this->pages = $pages;
     }
 
     public function export(): bool
