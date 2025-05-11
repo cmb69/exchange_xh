@@ -28,17 +28,13 @@ class InfoController
     /** @var string */
     private $pluginFolder;
 
-    /** @var array<string,string> */
-    private $lang;
-
     /** @var View */
     private $view;
 
     /** @param array<string,string> */
-    public function __construct(string $pluginFolder, array $lang, View $view)
+    public function __construct(string $pluginFolder, View $view)
     {
         $this->pluginFolder = $pluginFolder;
-        $this->lang = $lang;
         $this->view = $view;
     }
 
@@ -68,8 +64,8 @@ class InfoController
     private function checkPhpVersion(string $version)
     {
         $state = version_compare(PHP_VERSION, $version, 'ge') ? 'success' : 'fail';
-        $label = sprintf($this->lang['syscheck_phpversion'], $version);
-        $stateLabel = $this->lang["syscheck_$state"];
+        $label = $this->view->plain("syscheck_phpversion", $version);
+        $stateLabel = $this->view->plain("syscheck_$state");
         return (object) compact('state', 'label', 'stateLabel');
     }
 
@@ -77,8 +73,8 @@ class InfoController
     private function checkExtension(string $extension, bool $isMandatory = true)
     {
         $state = extension_loaded($extension) ? 'success' : ($isMandatory ? 'fail' : 'warning');
-        $label = sprintf($this->lang['syscheck_extension'], $extension);
-        $stateLabel = $this->lang["syscheck_$state"];
+        $label = $this->view->plain("syscheck_extension", $extension);
+        $stateLabel = $this->view->plain("syscheck_$state");
         return (object) compact('state', 'label', 'stateLabel');
     }
 
@@ -86,8 +82,8 @@ class InfoController
     private function checkXhVersion(string $version)
     {
         $state = version_compare(CMSIMPLE_XH_VERSION, "CMSimple_XH $version", 'ge') ? 'success' : 'fail';
-        $label = sprintf($this->lang['syscheck_xhversion'], $version);
-        $stateLabel = $this->lang["syscheck_$state"];
+        $label = $this->view->plain("syscheck_xhversion", $version);
+        $stateLabel = $this->view->plain("syscheck_$state");
         return (object) compact('state', 'label', 'stateLabel');
     }
 
@@ -95,8 +91,8 @@ class InfoController
     private function checkWritability(string $folder)
     {
         $state = is_writable($folder) ? 'success' : 'warning';
-        $label = sprintf($this->lang['syscheck_writable'], $folder);
-        $stateLabel = $this->lang["syscheck_$state"];
+        $label = $this->view->plain("syscheck_writable", $folder);
+        $stateLabel = $this->view->plain("syscheck_$state");
         return (object) compact('state', 'label', 'stateLabel');
     }
 }

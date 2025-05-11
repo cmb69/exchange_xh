@@ -24,7 +24,6 @@ class InfoControllerTest extends TestCase
     {
         return new InfoController(
             "./plugins/exchange/",
-            $this->lang,
             $this->view
         );
     }
