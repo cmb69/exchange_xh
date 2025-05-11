@@ -1,3 +1,9 @@
+<?php
+
+if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
+
+?>
+
 <h1>Exchange</h1>
 <img src="<?=$this->esc($logo)?>" class="exchange_logo" alt="<?=$this->text('alt_logo')?>">
 <p>Version: <?=$this->esc($version)?></p>

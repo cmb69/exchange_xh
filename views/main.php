@@ -1,3 +1,8 @@
+<?php
+
+if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
+
+?>
 <h1>Exchange – <?=$this->text('menu_main')?></h1>
 <form action="<?=$this->esc($url)?>" method="post">
     <input type="hidden" name="admin" value="<?=$this->esc($admin)?>">
