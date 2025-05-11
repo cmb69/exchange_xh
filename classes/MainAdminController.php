@@ -21,11 +21,10 @@
 
 namespace Exchange;
 
+use Plib\Request;
+
 class MainAdminController
 {
-    /** @var string */
-    private $scriptName;
-
     /** @var array */
     private $lang;
 
@@ -34,19 +33,18 @@ class MainAdminController
 
     public function __construct()
     {
-        global $sn, $plugin_tx, $title, $_XH_csrfProtection;
+        global $plugin_tx, $title, $_XH_csrfProtection;
 
-        $this->scriptName = $sn;
         $this->lang = $plugin_tx['exchange'];
         $this->csrfProtector = $_XH_csrfProtection;
         $title = XH_hsc($this->lang['menu_main']);
     }
 
-    public function defaultAction()
+    public function defaultAction(Request $request)
     {
         $service = new ExchangeService;
         $view = new View('main');
-        $view->url = "{$this->scriptName}?&exchange&edit";
+        $view->url = $request->url()->page("exchange")->with("edit")->relative();
         $view->admin = 'plugin_main';
         $view->csrfToken = new HtmlString($this->csrfProtector->tokenInput());
         $view->hasXmlFile = file_exists($service->getXmlFilename());

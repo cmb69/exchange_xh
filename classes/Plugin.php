@@ -21,6 +21,7 @@
 
 namespace Exchange;
 
+use Plib\Request;
 use Plib\SystemChecker;
 use Plib\View;
 
@@ -104,7 +105,7 @@ class Plugin
             $action = 'defaultAction';
         }
         ob_start();
-        $controller->$action();
+        $controller->$action(Request::current());
         $o .= ob_get_clean();
     }
 }
