@@ -2,6 +2,7 @@
 
 require_once "./vendor/autoload.php";
 
+require_once "../../cmsimple/classes/Pages.php";
 require_once "../../cmsimple/functions.php";
 
 require_once "../plib/classes/CsrfProtector.php";
@@ -13,6 +14,7 @@ require_once "../plib/classes/View.php";
 require_once "../plib/classes/FakeRequest.php";
 require_once "../plib/classes/FakeSystemChecker.php";
 
+require_once "./classes/Dic.php";
 require_once "./classes/ExchangeService.php";
 require_once "./classes/ExportService.php";
 require_once "./classes/ImportService.php";

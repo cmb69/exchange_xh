@@ -45,13 +45,12 @@ class ExportService extends ExchangeService
 
     public function __construct(string $xmlFilename)
     {
-        global $pth, $cf, $pd_router;
+        global $cf, $pd_router;
 
         parent::__construct($xmlFilename);
         $this->menuLevels = (int) $cf['menu']['levels'];
         $this->newSplitMode = isset($cf['headings']['show']);
         $this->pdRouter = $pd_router;
-        include_once "{$pth['folder']['classes']}Pages.php";
         $this->pages = new Pages();
     }
 

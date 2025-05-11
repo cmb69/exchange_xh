@@ -21,10 +21,7 @@
 
 namespace Exchange;
 
-use Plib\CsrfProtector;
 use Plib\Request;
-use Plib\SystemChecker;
-use Plib\View;
 
 class Plugin
 {
@@ -35,8 +32,6 @@ class Plugin
 
     public function __construct()
     {
-        global $exchange;
-
         $this->admin = isset($_GET['admin']) ? $_GET['admin'] : (isset($_POST['admin']) ? $_POST['admin'] : null);
     }
 
@@ -57,36 +52,13 @@ class Plugin
         $o .= print_plugin_admin('on');
         switch ($this->admin) {
             case '':
-                $o .= (string) $this->prepareInfoView();
+                $o .= Dic::infoController()();
                 break;
             case 'plugin_main':
-                $this->handleMainAdministration();
+                $o .= Dic::mainAdminController()(Request::current())();
                 break;
             default:
                 $o .= plugin_admin_common();
         }
-    }
-
-    private function prepareInfoView(): string
-    {
-        global $pth, $plugin_tx;
-
-        $view = new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"]);
-        $controller = new InfoController($pth["folder"]["plugins"] . "exchange/", new SystemChecker(), $view);
-        return $controller();
-    }
-
-    private function handleMainAdministration(): void
-    {
-        global $o, $pth, $plugin_tx;
-
-        $controller = new MainAdminController(
-            new CsrfProtector(),
-            new ExchangeService($pth['folder']['content'] . "content.xml"),
-            new ExportService($pth['folder']['content'] . "content.xml"),
-            new ImportService($pth['folder']['content'] . "content.xml"),
-            new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"])
-        );
-        $o .= $controller(Request::current())();
     }
 }
