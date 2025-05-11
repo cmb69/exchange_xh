@@ -21,7 +21,9 @@
 
 namespace Exchange;
 
-class SystemCheckService
+use Plib\View;
+
+class InfoController
 {
     /** @var string */
     private $pluginFolder;
@@ -29,11 +31,24 @@ class SystemCheckService
     /** @var array<string,string> */
     private $lang;
 
+    /** @var View */
+    private $view;
+
     /** @param array<string,string> */
-    public function __construct(string $pluginFolder, array $lang)
+    public function __construct(string $pluginFolder, array $lang, View $view)
     {
         $this->pluginFolder = $pluginFolder;
         $this->lang = $lang;
+        $this->view = $view;
+    }
+
+    public function __invoke(): string
+    {
+        return $this->view->render("info", [
+            "version" => Plugin::VERSION,
+            "logo" => $this->pluginFolder . "exchange.png",
+            "checks" => $this->getChecks(),
+        ]);
     }
 
     /** @return array<object> */

@@ -1,6 +1,6 @@
 <h1>Exchange</h1>
-<img src="<?=$this->logo()?>" class="exchange_logo" alt="<?=$this->text('alt_logo')?>">
-<p>Version: <?=$this->version()?></p>
+<img src="<?=$this->esc($logo)?>" class="exchange_logo" alt="<?=$this->text('alt_logo')?>">
+<p>Version: <?=$this->esc($version)?></p>
 <p>
     Copyright 2017 <a href="http://3-magi.net/">Christoph M. Becker</a>
 </p>
@@ -23,7 +23,7 @@
 </p>
 <div class="exchange_syscheck">
     <h2><?=$this->text('syscheck_title')?></h2>
-<?php foreach ($this->checks as $check):?>
-    <p class="xh_<?=$this->escape($check->state)?>"><?=$this->text('syscheck_message', $check->label, $check->stateLabel)?></p>
+<?php foreach ($checks as $check):?>
+    <p class="xh_<?=$this->esc($check->state)?>"><?=$this->text('syscheck_message', $check->label, $check->stateLabel)?></p>
 <?php endforeach?>
 </div>

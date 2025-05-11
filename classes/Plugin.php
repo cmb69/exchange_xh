@@ -21,6 +21,8 @@
 
 namespace Exchange;
 
+use Plib\View;
+
 class Plugin
 {
     const VERSION = '1.1-dev';
@@ -82,16 +84,13 @@ class Plugin
         }
     }
 
-    private function prepareInfoView(): View
+    private function prepareInfoView(): string
     {
         global $pth, $plugin_tx;
 
-        $view = new View('info');
-        $view->version = self::VERSION;
-        $view->logo = "{$pth['folder']['plugins']}exchange/exchange.png";
-        $systemCheckService = new SystemCheckService($pth["folder"]["plugins"] . "exchange/", $plugin_tx['exchange']);
-        $view->checks = $systemCheckService->getChecks();
-        return $view;
+        $view = new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"]);
+        $controller = new InfoController($pth["folder"]["plugins"] . "exchange/", $plugin_tx['exchange'], $view);
+        return $controller();
     }
 
     private function handleMainAdministration()
