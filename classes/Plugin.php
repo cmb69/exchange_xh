@@ -104,8 +104,6 @@ class Plugin
         if (!method_exists($controller, $action)) {
             $action = 'defaultAction';
         }
-        ob_start();
-        $controller->$action(Request::current());
-        $o .= ob_get_clean();
+        $o .= $controller->$action(Request::current())();
     }
 }

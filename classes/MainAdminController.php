@@ -22,6 +22,7 @@
 namespace Exchange;
 
 use Plib\Request;
+use Plib\Response;
 use Plib\View;
 
 class MainAdminController
@@ -41,50 +42,48 @@ class MainAdminController
         $title = XH_hsc($this->lang['menu_main']);
     }
 
-    public function defaultAction(Request $request)
+    public function defaultAction(Request $request): Response
     {
         global $pth, $plugin_tx;
         $service = new ExchangeService;
         $view = new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"]);
-        echo $view->render("main", [
+        return Response::create($view->render("main", [
             "url" => $request->url()->page("exchange")->with("edit")->relative(),
             "admin" => 'plugin_main',
             "csrfToken" => $this->csrfProtector->tokenInput(),
             "hasXmlFile" => file_exists($service->getXmlFilename()),
-        ]);
+        ]));
     }
 
-    public function exportAction()
+    public function exportAction(): Response
     {
         $this->csrfProtector->check();
         $exporter = new ExportService;
         if ($exporter->export()) {
-            header('Location: ' . CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal', true, 303);
-            exit;
+            return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal');
         } else {
-            echo XH_message('fail', $this->lang['message_export_failed']);
+            return Response::create(XH_message('fail', $this->lang['message_export_failed']));
         }
     }
 
-    public function exportedAction()
+    public function exportedAction(): Response
     {
-        echo XH_message('success', $this->lang['message_exported']);
+        return Response::create(XH_message('success', $this->lang['message_exported']));
     }
 
-    public function importAction()
+    public function importAction(): Response
     {
         $this->csrfProtector->check();
         $importer = new ImportService;
         if ($importer->import()) {
-            header('Location: ' . CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal', true, 303);
-            exit;
+            return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal');
         } else {
-            echo XH_message('fail', $this->lang['message_import_failed']);
+            return Response::create(XH_message('fail', $this->lang['message_import_failed']));
         }
     }
 
-    public function importedAction()
+    public function importedAction(): Response
     {
-        echo XH_message('success', $this->lang['message_imported']);
+        return Response::create(XH_message('success', $this->lang['message_imported']));
     }
 }
