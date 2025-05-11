@@ -21,6 +21,7 @@
 
 namespace Exchange;
 
+use Plib\SystemChecker;
 use Plib\View;
 
 class Plugin
@@ -89,7 +90,7 @@ class Plugin
         global $pth, $plugin_tx;
 
         $view = new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"]);
-        $controller = new InfoController($pth["folder"]["plugins"] . "exchange/", $view);
+        $controller = new InfoController($pth["folder"]["plugins"] . "exchange/", new SystemChecker(), $view);
         return $controller();
     }
 
