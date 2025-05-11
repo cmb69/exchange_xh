@@ -1,8 +1,8 @@
 <h1>Exchange – <?=$this->text('menu_main')?></h1>
-<form action="<?=$this->url()?>" method="post">
-    <input type="hidden" name="admin" value="<?=$this->admin()?>">
-    <?=$this->csrfToken()?>
-<?php if ($this->hasXmlFile):?>
+<form action="<?=$this->esc($url)?>" method="post">
+    <input type="hidden" name="admin" value="<?=$this->esc($admin)?>">
+    <?=$this->raw($csrfToken)?>
+<?php if ($hasXmlFile):?>
     <p class="xh_warning">
         <?=$this->text('message_export_overwrite')?>
     </p>
@@ -11,7 +11,7 @@
         <button name="action" value="export"><?=$this->text('label_export')?></button>
     </p>
     <hr>
-<?php if ($this->hasXmlFile):?>
+<?php if ($hasXmlFile):?>
     <p class="xh_warning">
         <?=$this->text('message_import_overwrite')?>
     </p>

@@ -22,6 +22,7 @@
 namespace Exchange;
 
 use Plib\Request;
+use Plib\View;
 
 class MainAdminController
 {
@@ -42,13 +43,15 @@ class MainAdminController
 
     public function defaultAction(Request $request)
     {
+        global $pth, $plugin_tx;
         $service = new ExchangeService;
-        $view = new View('main');
-        $view->url = $request->url()->page("exchange")->with("edit")->relative();
-        $view->admin = 'plugin_main';
-        $view->csrfToken = new HtmlString($this->csrfProtector->tokenInput());
-        $view->hasXmlFile = file_exists($service->getXmlFilename());
-        $view->render();
+        $view = new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"]);
+        echo $view->render("main", [
+            "url" => $request->url()->page("exchange")->with("edit")->relative(),
+            "admin" => 'plugin_main',
+            "csrfToken" => $this->csrfProtector->tokenInput(),
+            "hasXmlFile" => file_exists($service->getXmlFilename()),
+        ]);
     }
 
     public function exportAction()
