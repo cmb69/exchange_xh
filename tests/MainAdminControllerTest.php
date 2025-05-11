@@ -17,6 +17,12 @@ class MainAdminControllerTest extends TestCase
     /** @var ExchangeService */
     private $exchangeService;
 
+    /** @var ExportService&Stub */
+    private $exportService;
+
+    /** @var ImportService&Stub */
+    private $importService;
+
     /** @var View */
     private $view;
 
@@ -25,12 +31,20 @@ class MainAdminControllerTest extends TestCase
         $this->csrfProtector = $this->createStub(CsrfProtector::class);
         $this->csrfProtector->method("token")->willReturn("123456789ABCDEF");
         $this->exchangeService = new ExchangeService("./content/content.xml");
+        $this->exportService = $this->createStub(ExportService::class);
+        $this->importService = $this->createStub(ImportService::class);
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["exchange"]);
     }
 
     private function sut(): MainAdminController
     {
-        return new MainAdminController($this->csrfProtector, $this->exchangeService, $this->view);
+        return new MainAdminController(
+            $this->csrfProtector,
+            $this->exchangeService,
+            $this->exportService,
+            $this->importService,
+            $this->view
+        );
     }
 
     public function testShowsOverview(): void

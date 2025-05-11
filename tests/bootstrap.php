@@ -14,6 +14,8 @@ require_once "../plib/classes/FakeRequest.php";
 require_once "../plib/classes/FakeSystemChecker.php";
 
 require_once "./classes/ExchangeService.php";
+require_once "./classes/ExportService.php";
+require_once "./classes/ImportService.php";
 require_once "./classes/InfoController.php";
 require_once "./classes/MainAdminController.php";
 require_once "./classes/Plugin.php";

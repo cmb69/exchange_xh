@@ -99,6 +99,8 @@ class Plugin
         $controller = new MainAdminController(
             new CsrfProtector(),
             new ExchangeService($pth['folder']['content'] . "content.xml"),
+            new ExportService($pth['folder']['content'] . "content.xml"),
+            new ImportService($pth['folder']['content'] . "content.xml"),
             new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"])
         );
         $action = "{$this->action}Action";

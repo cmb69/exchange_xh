@@ -34,15 +34,28 @@ class MainAdminController
     /** @var ExchangeService */
     private $exchangeService;
 
+    /** @var ExportService */
+    private $exportService;
+
+    /** @var ImportService */
+    private $importService;
+
     /** @var View */
     private $view;
 
-    public function __construct(CsrfProtector $csrfProtector, ExchangeService $exchangeService, View $view)
-    {
+    public function __construct(
+        CsrfProtector $csrfProtector,
+        ExchangeService $exchangeService,
+        ExportService $exportService,
+        ImportService $importService,
+        View $view
+    ) {
         global $title;
 
         $this->csrfProtector = $csrfProtector;
         $this->exchangeService = $exchangeService;
+        $this->exportService = $exportService;
+        $this->importService = $importService;
         $this->view = $view;
         $title = $this->view->plain("menu_main");
     }
@@ -62,8 +75,7 @@ class MainAdminController
         if (!$this->csrfProtector->check($request->post("exchange_token"))) {
             return Response::create("not authorized"); // TODO i18n
         }
-        $exporter = new ExportService($this->exchangeService->getXmlFilename());
-        if ($exporter->export()) {
+        if ($this->exportService->export()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal');
         } else {
             return Response::create($this->view->message("fail", "message_export_failed"));
@@ -80,8 +92,7 @@ class MainAdminController
         if (!$this->csrfProtector->check($request->post("exchange_token"))) {
             return Response::create("not authorized"); // TODO i18n
         }
-        $importer = new ImportService($this->exchangeService->getXmlFilename());
-        if ($importer->import()) {
+        if ($this->importService->import()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal');
         } else {
             return Response::create($this->view->message("fail", "message_import_failed"));
