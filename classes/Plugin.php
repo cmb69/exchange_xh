@@ -84,12 +84,12 @@ class Plugin
 
     private function prepareInfoView(): View
     {
-        global $pth;
+        global $pth, $plugin_tx;
 
         $view = new View('info');
         $view->version = self::VERSION;
         $view->logo = "{$pth['folder']['plugins']}exchange/exchange.png";
-        $systemCheckService = new SystemCheckService;
+        $systemCheckService = new SystemCheckService($pth["folder"]["plugins"] . "exchange/", $plugin_tx['exchange']);
         $view->checks = $systemCheckService->getChecks();
         return $view;
     }

@@ -26,15 +26,14 @@ class SystemCheckService
     /** @var string */
     private $pluginFolder;
 
-    /** @var array */
+    /** @var array<string,string> */
     private $lang;
 
-    public function __construct()
+    /** @param array<string,string> */
+    public function __construct(string $pluginFolder, array $lang)
     {
-        global $pth, $plugin_tx;
-
-        $this->pluginFolder = "{$pth['folder']['plugins']}exchange";
-        $this->lang = $plugin_tx['exchange'];
+        $this->pluginFolder = $pluginFolder;
+        $this->lang = $lang;
     }
 
     /** @return array<object> */
@@ -45,8 +44,8 @@ class SystemCheckService
             $this->checkExtension('DOM'),
             $this->checkExtension('SimpleXML'),
             $this->checkXhVersion('1.7.0'),
-            $this->checkWritability("$this->pluginFolder/css/"),
-            $this->checkWritability("$this->pluginFolder/languages/")
+            $this->checkWritability($this->pluginFolder . "css/"),
+            $this->checkWritability($this->pluginFolder . "languages/")
         );
     }
 

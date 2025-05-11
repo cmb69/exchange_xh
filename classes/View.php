@@ -40,7 +40,8 @@ class View
         $this->data[$name] = $value;
     }
 
-    public function __get(string $name): string
+    /** @return mixed */
+    public function __get(string $name)
     {
         return $this->data[$name];
     }
