@@ -33,33 +33,21 @@ class Plugin
     /** @var string */
     private $admin;
 
-    /** @var bool */
-    private $exchange;
-
     public function __construct()
     {
         global $exchange;
 
         $this->admin = isset($_GET['admin']) ? $_GET['admin'] : (isset($_POST['admin']) ? $_POST['admin'] : null);
-        $this->exchange = isset($exchange) ? true : false;
     }
 
     public function init(): void
     {
         if (XH_ADM) { // @phpstan-ignore-line
-            if (function_exists('XH_registerStandardPluginMenuItems')) {
-                XH_registerStandardPluginMenuItems(true);
-            }
-            if ($this->isAdministrationRequested()) {
+            XH_registerStandardPluginMenuItems(true);
+            if (XH_wantsPluginAdministration('exchange')) {
                 $this->handleAdministration();
             }
         }
-    }
-
-    private function isAdministrationRequested(): bool
-    {
-        return function_exists('XH_wantsPluginAdministration') && XH_wantsPluginAdministration('exchange')
-            || $this->exchange;
     }
 
     private function handleAdministration(): void
