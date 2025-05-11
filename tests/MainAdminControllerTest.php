@@ -3,6 +3,7 @@
 namespace Exchange;
 
 use ApprovalTests\Approvals;
+use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Plib\CsrfProtector;
 use Plib\FakeRequest;
@@ -22,6 +23,7 @@ class MainAdminControllerTest extends TestCase
     public function setUp(): void
     {
         $this->csrfProtector = $this->createStub(CsrfProtector::class);
+        $this->csrfProtector->method("token")->willReturn("123456789ABCDEF");
         $this->exchangeService = new ExchangeService("./content/content.xml");
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["exchange"]);
     }
