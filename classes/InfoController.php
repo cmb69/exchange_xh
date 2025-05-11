@@ -45,7 +45,7 @@ class InfoController
     public function __invoke(): string
     {
         return $this->view->render("info", [
-            "version" => Plugin::VERSION,
+            "version" => Dic::VERSION,
             "logo" => $this->pluginFolder . "exchange.png",
             "checks" => $this->getChecks(),
         ]);

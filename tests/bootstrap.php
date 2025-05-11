@@ -20,7 +20,6 @@ require_once "./classes/ExportService.php";
 require_once "./classes/ImportService.php";
 require_once "./classes/InfoController.php";
 require_once "./classes/MainAdminController.php";
-require_once "./classes/Plugin.php";
 
 const CMSIMPLE_XH_VERSION = "1.8";
 const CMSIMPLE_URL = "http://example.com/";
