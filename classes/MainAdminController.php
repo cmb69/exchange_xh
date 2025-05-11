@@ -27,9 +27,6 @@ use Plib\View;
 
 class MainAdminController
 {
-    /** @var array */
-    private $lang;
-
     /** @var object */
     private $csrfProtector;
 
@@ -38,12 +35,11 @@ class MainAdminController
 
     public function __construct(View $view)
     {
-        global $plugin_tx, $title, $_XH_csrfProtection;
+        global $title, $_XH_csrfProtection;
 
-        $this->lang = $plugin_tx['exchange'];
         $this->csrfProtector = $_XH_csrfProtection;
-        $title = XH_hsc($this->lang['menu_main']);
         $this->view = $view;
+        $title = $this->view->plain("menu_main");
     }
 
     public function defaultAction(Request $request): Response
@@ -64,13 +60,13 @@ class MainAdminController
         if ($exporter->export()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal');
         } else {
-            return Response::create(XH_message('fail', $this->lang['message_export_failed']));
+            return Response::create($this->view->message("fail", "message_export_failed"));
         }
     }
 
     public function exportedAction(): Response
     {
-        return Response::create(XH_message('success', $this->lang['message_exported']));
+        return Response::create($this->view->message("success", "message_exported"));
     }
 
     public function importAction(): Response
@@ -80,12 +76,12 @@ class MainAdminController
         if ($importer->import()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal');
         } else {
-            return Response::create(XH_message('fail', $this->lang['message_import_failed']));
+            return Response::create($this->view->message("fail", "message_import_failed"));
         }
     }
 
     public function importedAction(): Response
     {
-        return Response::create(XH_message('success', $this->lang['message_imported']));
+        return Response::create($this->view->message("success", "message_imported"));
     }
 }
