@@ -50,7 +50,7 @@ class MainAdminControllerTest extends TestCase
     public function testShowsOverview(): void
     {
         $request = new FakeRequest();
-        $response = $this->sut()->defaultAction($request);
+        $response = $this->sut()($request);
         Approvals::verifyHtml($response->output());
     }
 
@@ -59,7 +59,7 @@ class MainAdminControllerTest extends TestCase
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=export",
         ]);
-        $response = $this->sut()->exportAction($request);
+        $response = $this->sut()($request);
         $this->assertSame("not authorized", $response->output());
     }
 
@@ -70,7 +70,7 @@ class MainAdminControllerTest extends TestCase
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=export",
         ]);
-        $response = $this->sut()->exportAction($request);
+        $response = $this->sut()($request);
         $this->assertStringContainsString("Exporting the contents failed!", $response->output());
     }
 
@@ -81,7 +81,7 @@ class MainAdminControllerTest extends TestCase
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=export",
         ]);
-        $response = $this->sut()->exportAction($request);
+        $response = $this->sut()($request);
         $this->assertSame(
             "http://example.com/?&exchange&admin=plugin_main&action=exported&normal",
             $response->location()
@@ -93,7 +93,7 @@ class MainAdminControllerTest extends TestCase
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=exported",
         ]);
-        $response = $this->sut()->exportedAction($request);
+        $response = $this->sut()($request);
         $this->assertStringContainsString(
             "The current content file has been exported.",
             $response->output()
@@ -105,7 +105,7 @@ class MainAdminControllerTest extends TestCase
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=import",
         ]);
-        $response = $this->sut()->importAction($request);
+        $response = $this->sut()($request);
         $this->assertSame("not authorized", $response->output());
     }
 
@@ -116,7 +116,7 @@ class MainAdminControllerTest extends TestCase
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=import",
         ]);
-        $response = $this->sut()->importAction($request);
+        $response = $this->sut()($request);
         $this->assertStringContainsString("Importing the contents failed!", $response->output());
     }
 
@@ -127,7 +127,7 @@ class MainAdminControllerTest extends TestCase
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=import",
         ]);
-        $response = $this->sut()->importAction($request);
+        $response = $this->sut()($request);
         $this->assertSame(
             "http://example.com/?&exchange&admin=plugin_main&action=imported&normal",
             $response->location()
@@ -139,7 +139,7 @@ class MainAdminControllerTest extends TestCase
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=imported",
         ]);
-        $response = $this->sut()->importedAction($request);
+        $response = $this->sut()($request);
         $this->assertStringContainsString(
             "The contents have been imported.",
             $response->output()

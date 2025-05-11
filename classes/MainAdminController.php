@@ -60,7 +60,23 @@ class MainAdminController
         $title = $this->view->plain("menu_main");
     }
 
-    public function defaultAction(Request $request): Response
+    public function __invoke(Request $request): Response
+    {
+        switch ($request->get("action")) {
+            default:
+                return $this->defaultAction($request);
+            case "export":
+                return $this->exportAction($request);
+            case "exported":
+                return $this->exportedAction();
+            case "import":
+                return $this->importAction($request);
+            case "imported":
+                return $this->importedAction();
+        }
+    }
+
+    private function defaultAction(Request $request): Response
     {
         return Response::create($this->view->render("main", [
             "url" => $request->url()->page("exchange")->with("edit")->relative(),
@@ -70,7 +86,7 @@ class MainAdminController
         ]));
     }
 
-    public function exportAction(Request $request): Response
+    private function exportAction(Request $request): Response
     {
         if (!$this->csrfProtector->check($request->post("exchange_token"))) {
             return Response::create("not authorized"); // TODO i18n
@@ -82,12 +98,12 @@ class MainAdminController
         }
     }
 
-    public function exportedAction(): Response
+    private function exportedAction(): Response
     {
         return Response::create($this->view->message("success", "message_exported"));
     }
 
-    public function importAction(Request $request): Response
+    private function importAction(Request $request): Response
     {
         if (!$this->csrfProtector->check($request->post("exchange_token"))) {
             return Response::create("not authorized"); // TODO i18n
@@ -99,7 +115,7 @@ class MainAdminController
         }
     }
 
-    public function importedAction(): Response
+    private function importedAction(): Response
     {
         return Response::create($this->view->message("success", "message_imported"));
     }

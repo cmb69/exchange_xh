@@ -33,18 +33,14 @@ class Plugin
     /** @var string */
     private $admin;
 
-    /** @var string */
-    private $action;
-
     /** @var bool */
     private $exchange;
 
     public function __construct()
     {
-        global $action, $exchange;
+        global $exchange;
 
         $this->admin = isset($_GET['admin']) ? $_GET['admin'] : (isset($_POST['admin']) ? $_POST['admin'] : null);
-        $this->action = $action;
         $this->exchange = isset($exchange) ? true : false;
     }
 
@@ -103,10 +99,6 @@ class Plugin
             new ImportService($pth['folder']['content'] . "content.xml"),
             new View($pth["folder"]["plugins"] . "exchange/views/", $plugin_tx["exchange"])
         );
-        $action = "{$this->action}Action";
-        if (!method_exists($controller, $action)) {
-            $action = 'defaultAction';
-        }
-        $o .= $controller->$action(Request::current())();
+        $o .= $controller(Request::current())();
     }
 }
