@@ -1,7 +1,6 @@
 <?php
 
 $plugin_tx['exchange']['menu_main']="Import/Export";
-$plugin_tx['exchange']['alt_logo']="Spinning Arrows";
 $plugin_tx['exchange']['label_export']="Export";
 $plugin_tx['exchange']['label_import']="Import";
 $plugin_tx['exchange']['message_export_overwrite']="On export the existing file \"content.xml\" will be overwritten!";

@@ -1,7 +1,6 @@
 <?php
 
 $plugin_tx['exchange']['menu_main']="Importer / Exporter";
-$plugin_tx['exchange']['alt_logo']="Flèches tournantes";
 $plugin_tx['exchange']['label_export']="Exporter";
 $plugin_tx['exchange']['label_import']="Importer";
 $plugin_tx['exchange']['message_export_overwrite']="Le fichier existant \"content.xml\" sera écrasé à l'exportation !";
