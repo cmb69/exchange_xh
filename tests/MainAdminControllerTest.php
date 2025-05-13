@@ -49,7 +49,7 @@ class MainAdminControllerTest extends TestCase
 
     public function testShowsOverview(): void
     {
-        $request = new FakeRequest();
+        $request = new FakeRequest(["url" => "http://example.com/?&exchange&admin=plugin_main&action=plugin_tx"]);
         $response = $this->sut()($request);
         Approvals::verifyHtml($response->output());
     }

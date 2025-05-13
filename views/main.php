@@ -3,18 +3,18 @@
 use Plib\View;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
+
 /**
  * @var View $this
- * @var string $url
- * @var string $admin
+ * @var string $export_url
+ * @var string $import_url
  * @var string $csrfToken
  * @var bool $hasXmlFile
  */
 ?>
 
 <h1>Exchange – <?=$this->text('menu_main')?></h1>
-<form action="<?=$this->esc($url)?>" method="post">
-    <input type="hidden" name="admin" value="<?=$this->esc($admin)?>">
+<form method="post">
     <input type="hidden" name="exchange_token" value="<?=$this->raw($csrfToken)?>">
 <?php if ($hasXmlFile):?>
     <p class="xh_warning">
@@ -22,7 +22,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
     </p>
 <?php endif?>
     <p>
-        <button name="action" value="export"><?=$this->text('label_export')?></button>
+        <button formaction="<?=$this->esc($export_url)?>"><?=$this->text('label_export')?></button>
     </p>
     <hr>
 <?php if ($hasXmlFile):?>
@@ -30,7 +30,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
         <?=$this->text('message_import_overwrite')?>
     </p>
     <p>
-        <button name="action" value="import"><?=$this->text('label_import')?></button>
+        <button formaction="<?=$this->esc($import_url)?>"><?=$this->text('label_import')?></button>
 <?php else:?>
     <p class="xh_info">
         <?=$this->text('message_no_import')?>

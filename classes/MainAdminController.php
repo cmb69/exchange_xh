@@ -78,9 +78,10 @@ class MainAdminController
 
     private function defaultAction(Request $request): Response
     {
+        $url = $request->url()->with("edit");
         return Response::create($this->view->render("main", [
-            "url" => $request->url()->page("exchange")->with("edit")->relative(),
-            "admin" => 'plugin_main',
+            "export_url" => $url->with("action", "export")->relative(),
+            "import_url" => $url->with("action", "import")->relative(),
             "csrfToken" => $this->csrfProtector->token(),
             "hasXmlFile" => file_exists($this->exchangeService->getXmlFilename()),
         ]));
