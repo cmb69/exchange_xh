@@ -31,4 +31,9 @@ class ContentsTest extends TestCase
         $actual = Contents::fromXhString($expected->toXhString());
         $this->assertEquals($expected, $actual);
     }
+
+    public function testSerializesXmlString(): void
+    {
+        Approvals::verifyHtml($this->sut()->toXmlString());
+    }
 }

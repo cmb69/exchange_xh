@@ -21,19 +21,21 @@
 
 namespace Exchange\Model;
 
-class Contents
+use DOMDocument;
+
+trait XmlContents
 {
-    use XhContents;
-    use XmlContents;
-
-    /** @var list<Page> */
-    private $pages;
-
-    /** @param array<string,string> $data */
-    public function appendPage(string $title, array $data, string $content): Page
+    public function toXmlString(): string
     {
-        $page = new Page(1, $title, $data, $content);
-        $this->pages[] = $page;
-        return $page;
+        $doc = new DOMDocument('1.0', 'UTF-8');
+        $contents = $doc->createElement('contents');
+        // do we want to use the version of the running system?
+        $contents->setAttribute('version', (string) preg_replace('/^CMSimple_XH /', '', CMSIMPLE_XH_VERSION));
+        $doc->appendChild($contents);
+        foreach ($this->pages as $page) {
+            $contents->appendChild($page->createPageElement($doc));
+        }
+        $doc->formatOutput = true;
+        return (string) $doc->saveXML();
     }
 }

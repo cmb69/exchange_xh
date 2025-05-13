@@ -24,6 +24,7 @@ namespace Exchange\Model;
 class Page
 {
     use XhPage;
+    use XmlPage;
 
     /** @var int */
     private $level;

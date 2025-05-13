@@ -19,6 +19,8 @@ require_once "../plib/classes/FakeSystemChecker.php";
 
 require_once "./classes/model/XhContents.php";
 require_once "./classes/model/XhPage.php";
+require_once "./classes/model/XmlContents.php";
+require_once "./classes/model/XmlPage.php";
 require_once "./classes/model/Contents.php";
 require_once "./classes/model/Page.php";
 require_once "./classes/Dic.php";
