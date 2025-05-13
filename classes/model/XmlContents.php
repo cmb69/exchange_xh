@@ -25,20 +25,20 @@ use DOMDocument;
 
 trait XmlContents
 {
-    public static function fromXmlString(string $contents): ?self
+    private static function fromXmlString(string $contents): ?self
     {
         $root = simplexml_load_string($contents);
         if (!$root) {
             return null;
         }
-        $that = new self();
+        $that = new self("xml");
         foreach ($root->page as $page) {
             $that->pages[] = Page::fromXml($page, 1);
         }
         return $that;
     }
 
-    public function toXmlString(): string
+    private function toXmlString(): string
     {
         $doc = new DOMDocument('1.0', 'UTF-8');
         $contents = $doc->createElement('contents');

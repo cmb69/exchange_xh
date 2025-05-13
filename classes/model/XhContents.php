@@ -23,14 +23,14 @@ namespace Exchange\Model;
 
 trait XhContents
 {
-    public static function fromXhString(string $contents): ?self
+    private static function fromXhString(string $contents): ?self
     {
         $matches = preg_split('/<!--XH_ml(\d):(.*?)-->/', $contents, -1, PREG_SPLIT_DELIM_CAPTURE);
         if ($matches === false) {
             return null;
         }
         $prevLevel = 0;
-        $that = new self();
+        $that = new self("htm");
         // ignoring the prolog ($matches[0]) since that doesn't seem to be necessary
         for ($i = 1; $i < count($matches); $i += 3) {
             $level = (int) $matches[$i];
@@ -82,7 +82,7 @@ trait XhContents
         }
     }
 
-    public function toXhString(): string
+    private function toXhString(): string
     {
         $res = "<html><head><title>content file</title>\n";
         $res .= "</head><body>\n";

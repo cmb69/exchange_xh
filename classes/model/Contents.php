@@ -21,13 +21,35 @@
 
 namespace Exchange\Model;
 
-class Contents
+use Plib\Document;
+
+final class Contents implements Document
 {
     use XhContents;
     use XmlContents;
 
+    /** @var string */
+    private $extension;
+
     /** @var list<Page> */
     private $pages;
+
+    public static function fromString(string $contents, string $key): ?self
+    {
+        switch (pathinfo($key, PATHINFO_EXTENSION)) {
+            case "htm":
+                return self::fromXhString($contents);
+            case "xml":
+                return self::fromXmlString($contents);
+            default:
+                return null;
+        }
+    }
+
+    public function __construct(string $extension)
+    {
+        $this->extension = $extension;
+    }
 
     /** @param array<string,string> $data */
     public function appendPage(string $title, array $data, string $content): Page
@@ -35,5 +57,17 @@ class Contents
         $page = new Page(1, $title, $data, $content);
         $this->pages[] = $page;
         return $page;
+    }
+
+    public function toString(): string
+    {
+        switch ($this->extension) {
+            case "htm":
+                return $this->toXhString();
+            case "xml":
+                return $this->toXmlString();
+            default:
+                return "";
+        }
     }
 }

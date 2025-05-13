@@ -8,9 +8,9 @@ use PHPUnit\Framework\TestCase;
 /** @small */
 class ContentsTest extends TestCase
 {
-    private function sut(): Contents
+    private function sut(string $extension): Contents
     {
-        $sut = new Contents();
+        $sut = new Contents($extension);
         $page1 = $sut->appendPage("Start", ["url" => "\\Start'"], "<h1>Start</h1>");
         $page2 = $page1->appendChild("Sub", [], "<h1>Sub</h1>");
         $page1->appendChild("Sub2", [], "<h1>Sub2</h1>");
@@ -22,25 +22,25 @@ class ContentsTest extends TestCase
 
     public function testSerializesXhString(): void
     {
-        Approvals::verifyHtml($this->sut()->toXhString());
+        Approvals::verifyHtml($this->sut("htm")->toString());
     }
 
     public function testUnserializesXhString(): void
     {
-        $expected = $this->sut();
-        $actual = Contents::fromXhString($expected->toXhString());
+        $expected = $this->sut("htm");
+        $actual = Contents::fromString($expected->toString(), "content.htm");
         $this->assertEquals($expected, $actual);
     }
 
     public function testSerializesXmlString(): void
     {
-        Approvals::verifyHtml($this->sut()->toXmlString());
+        Approvals::verifyHtml($this->sut("xml")->toString());
     }
 
     public function testUnserializesXmlString(): void
     {
-        $expected = $this->sut();
-        $actual = Contents::fromXmlString($expected->toXmlString());
+        $expected = $this->sut("xml");
+        $actual = Contents::fromString($expected->toString(), "content.xml");
         $this->assertEquals($expected, $actual);
     }
 }
