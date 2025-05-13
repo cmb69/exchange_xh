@@ -89,8 +89,7 @@
 
   <target name="build-patch" description="builds a distributable update package">
     <fail unless="patchee" message="patchee is not defined!"/>
-    <fail unless="version" message="version is not defined!"/>
-    <unzip file="Exchange_XH-${version}.zip" todir="current"/>
+    <unzip file="Exchange_XH-1.1-dev.zip" todir="current"/>
     <unzip file="${patchee}" todir="patchee"/>
     <copy todir="dist">
       <fileset dir="current">
@@ -101,11 +100,15 @@
       <fileset dir="dist/exchange">
         <include name="config/config.php"/>
         <include name="languages/??.php"/>
-        <include name="css/stylesheet.css"/>
       </fileset>
     </delete>
-    <zip destfile="Exchange_XH-${version}-PATCH.zip" basedir="dist"
-       includeemptydirs="false"/>
+    <if>
+      <available file="dist/twocents/css/stylesheet.css"/>
+      <then>
+        <move file="dist/twocents/css/stylesheet.css" tofile="dist/twocents/css/stylesheet-1.1-dev.css"/>
+      </then>
+    </if>
+    <zip destfile="Exchange_XH-1.1-dev-update-from-1.x.zip" basedir="dist" includeemptydirs="false"/>
     <delete dir="patchee" quiet="true"/>
     <delete dir="current" quiet="true"/>
     <delete dir="dist" quiet="true"/>
