@@ -27,6 +27,9 @@ trait XmlContents
 {
     private static function fromXmlString(string $contents): ?self
     {
+        if ($contents === "") {
+            return new self("xml");
+        }
         $root = simplexml_load_string($contents);
         if (!$root) {
             return null;

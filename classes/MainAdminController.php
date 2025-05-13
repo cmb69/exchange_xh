@@ -21,7 +21,9 @@
 
 namespace Exchange;
 
+use Exchange\Model\Contents;
 use Plib\CsrfProtector;
+use Plib\DocumentStore;
 use Plib\Request;
 use Plib\Response;
 use Plib\View;
@@ -31,31 +33,21 @@ class MainAdminController
     /** @var CsrfProtector */
     private $csrfProtector;
 
-    /** @var ExchangeService */
-    private $exchangeService;
-
-    /** @var ExportService */
-    private $exportService;
-
-    /** @var ImportService */
-    private $importService;
+    /** @var DocumentStore */
+    private $store;
 
     /** @var View */
     private $view;
 
     public function __construct(
         CsrfProtector $csrfProtector,
-        ExchangeService $exchangeService,
-        ExportService $exportService,
-        ImportService $importService,
+        DocumentStore $store,
         View $view
     ) {
         global $title;
 
         $this->csrfProtector = $csrfProtector;
-        $this->exchangeService = $exchangeService;
-        $this->exportService = $exportService;
-        $this->importService = $importService;
+        $this->store = $store;
         $this->view = $view;
         $title = $this->view->plain("menu_main");
     }
@@ -83,7 +75,7 @@ class MainAdminController
             "export_url" => $url->with("action", "export")->relative(),
             "import_url" => $url->with("action", "import")->relative(),
             "csrfToken" => $this->csrfProtector->token(),
-            "hasXmlFile" => file_exists($this->exchangeService->getXmlFilename()),
+            "hasXmlFile" => !empty($this->store->find('/^content\.xml$/')),
         ]));
     }
 
@@ -92,7 +84,17 @@ class MainAdminController
         if (!$this->csrfProtector->check($request->post("exchange_token"))) {
             return Response::create("not authorized"); // TODO i18n
         }
-        if ($this->exportService->export()) {
+        $xml = Contents::update("xml", $this->store);
+        if ($xml === null) {
+            return Response::create("can't load XML"); // TODO
+        }
+        $htm = Contents::retrieve("htm", $this->store);
+        if ($htm === null) {
+            $this->store->rollback();
+            return Response::create("can't load HTM"); // TODO
+        }
+        $xml->copy($htm);
+        if ($this->store->commit()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal');
         } else {
             return Response::create($this->view->message("fail", "message_export_failed"));
@@ -109,7 +111,16 @@ class MainAdminController
         if (!$this->csrfProtector->check($request->post("exchange_token"))) {
             return Response::create("not authorized"); // TODO i18n
         }
-        if ($this->importService->import()) {
+        $htm = Contents::update("htm", $this->store);
+        if ($htm === null) {
+            return Response::create("can't load HTML"); // TODO
+        }
+        $xml = Contents::retrieve("xml", $this->store);
+        if ($xml === null) {
+            return Response::create("can't load XML"); // TODO
+        }
+        $htm->copy($xml);
+        if ($this->store->commit()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal');
         } else {
             return Response::create($this->view->message("fail", "message_import_failed"));

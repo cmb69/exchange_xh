@@ -22,6 +22,7 @@
 namespace Exchange\Model;
 
 use Plib\Document;
+use Plib\DocumentStore;
 
 final class Contents implements Document
 {
@@ -32,7 +33,7 @@ final class Contents implements Document
     private $extension;
 
     /** @var list<Page> */
-    private $pages;
+    private $pages = [];
 
     public static function fromString(string $contents, string $key): ?self
     {
@@ -46,6 +47,16 @@ final class Contents implements Document
         }
     }
 
+    public static function retrieve(string $extension, DocumentStore $store): ?self
+    {
+        return $store->retrieve("content.$extension", self::class);
+    }
+
+    public static function update(string $extension, DocumentStore $store): ?self
+    {
+        return $store->update("content.$extension", self::class);
+    }
+
     public function __construct(string $extension)
     {
         $this->extension = $extension;
@@ -57,6 +68,11 @@ final class Contents implements Document
         $page = new Page(1, $title, $data, $content);
         $this->pages[] = $page;
         return $page;
+    }
+
+    public function copy(self $other): void
+    {
+        $this->pages = $other->pages;
     }
 
     public function toString(): string

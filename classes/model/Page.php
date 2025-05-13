@@ -21,7 +21,7 @@
 
 namespace Exchange\Model;
 
-class Page
+final class Page
 {
     use XhPage;
     use XmlPage;

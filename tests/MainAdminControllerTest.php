@@ -3,9 +3,11 @@
 namespace Exchange;
 
 use ApprovalTests\Approvals;
+use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
 use Plib\CsrfProtector;
+use Plib\DocumentStore;
 use Plib\FakeRequest;
 use Plib\View;
 
@@ -14,25 +16,18 @@ class MainAdminControllerTest extends TestCase
     /** @var CsrfProtector&Stub */
     private $csrfProtector;
 
-    /** @var ExchangeService */
-    private $exchangeService;
-
-    /** @var ExportService&Stub */
-    private $exportService;
-
-    /** @var ImportService&Stub */
-    private $importService;
+    /** @var DocumentStore */
+    private $store;
 
     /** @var View */
     private $view;
 
     public function setUp(): void
     {
+        vfsStream::setup("root");
         $this->csrfProtector = $this->createStub(CsrfProtector::class);
         $this->csrfProtector->method("token")->willReturn("123456789ABCDEF");
-        $this->exchangeService = new ExchangeService("./content/content.xml");
-        $this->exportService = $this->createStub(ExportService::class);
-        $this->importService = $this->createStub(ImportService::class);
+        $this->store = new DocumentStore(vfsStream::url("root/"));
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["exchange"]);
     }
 
@@ -40,9 +35,7 @@ class MainAdminControllerTest extends TestCase
     {
         return new MainAdminController(
             $this->csrfProtector,
-            $this->exchangeService,
-            $this->exportService,
-            $this->importService,
+            $this->store,
             $this->view
         );
     }
@@ -66,7 +59,7 @@ class MainAdminControllerTest extends TestCase
     public function testReportsFailureToExport(): void
     {
         $this->csrfProtector->method("check")->willReturn(true);
-        $this->exportService->method("export")->willReturn(false);
+        vfsStream::setQuota(0);
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=export",
         ]);
@@ -77,11 +70,11 @@ class MainAdminControllerTest extends TestCase
     public function testSuccessfulExportRedirects(): void
     {
         $this->csrfProtector->method("check")->willReturn(true);
-        $this->exportService->method("export")->willReturn(true);
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=export",
         ]);
         $response = $this->sut()($request);
+        $this->assertFileExists(vfsStream::url("root/content.xml"));
         $this->assertSame(
             "http://example.com/?&exchange&admin=plugin_main&action=exported&normal",
             $response->location()
@@ -112,7 +105,7 @@ class MainAdminControllerTest extends TestCase
     public function testReportsFailureToImport(): void
     {
         $this->csrfProtector->method("check")->willReturn(true);
-        $this->importService->method("import")->willReturn(false);
+        vfsStream::setQuota(0);
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=import",
         ]);
@@ -123,11 +116,11 @@ class MainAdminControllerTest extends TestCase
     public function testSuccessfulImportRedirects(): void
     {
         $this->csrfProtector->method("check")->willReturn(true);
-        $this->importService->method("import")->willReturn(true);
         $request = new FakeRequest([
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=import",
         ]);
         $response = $this->sut()($request);
+        $this->assertFileExists(vfsStream::url("root/content.htm"));
         $this->assertSame(
             "http://example.com/?&exchange&admin=plugin_main&action=imported&normal",
             $response->location()

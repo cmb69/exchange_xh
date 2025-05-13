@@ -24,9 +24,6 @@ require_once "./classes/model/XmlPage.php";
 require_once "./classes/model/Contents.php";
 require_once "./classes/model/Page.php";
 require_once "./classes/Dic.php";
-require_once "./classes/ExchangeService.php";
-require_once "./classes/ExportService.php";
-require_once "./classes/ImportService.php";
 require_once "./classes/InfoController.php";
 require_once "./classes/MainAdminController.php";
 
