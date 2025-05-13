@@ -36,4 +36,11 @@ class ContentsTest extends TestCase
     {
         Approvals::verifyHtml($this->sut()->toXmlString());
     }
+
+    public function testUnserializesXmlString(): void
+    {
+        $expected = $this->sut();
+        $actual = Contents::fromXmlString($expected->toXmlString());
+        $this->assertEquals($expected, $actual);
+    }
 }

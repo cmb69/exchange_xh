@@ -23,13 +23,35 @@ namespace Exchange\Model;
 
 use DOMDocument;
 use DOMElement;
+use SimpleXMLElement;
 
 trait XmlPage
 {
+    public static function fromXml(SimpleXMLElement $elt, int $level): self
+    {
+        $that = new self($level, $elt["title"] ?? "unknown", self::pageDataFromXml($elt), $elt->content);
+        if (isset($elt->page)) {
+            foreach ($elt->page as $child) {
+                $that->children[] = self::fromXml($child, $level + 1);
+            }
+        }
+        return $that;
+    }
+
+    /** @return array<string,string> */
+    private static function pageDataFromXml(SimpleXMLElement $elt): array
+    {
+        $result = array();
+        foreach ($elt->pagedata->attributes() as $name => $value) {
+            $result[$name] = (string) $value;
+        }
+        return $result;
+    }
+
     public function createPageElement(DOMDocument $doc): DOMElement
     {
         $elt = $doc->createElement('page');
-        $elt->setAttribute('heading', $this->title);
+        $elt->setAttribute('title', $this->title);
         $elt->setAttribute('level', (string) $this->level);
         // do we need the URL?
         // $page->setAttribute('url', $this->pages->url($pageIndex));
