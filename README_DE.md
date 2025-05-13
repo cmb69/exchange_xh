@@ -64,9 +64,51 @@ Plugins (`Plugins` → `Import/Export`) exportieren und importieren
 Nach erfolgreichem Export befindet sich die Datei `content.xml` im `content/`
 Ordner der aktuellen Sprache, gleich neben der `content.htm` Datei, aus der
 exportiert wurde. Um fremde Inhalte zu importieren, müssen Sie eine Datei
-`content.xml`, die ein passendes Format haben muss, gleich neben diejenige
+`content.xml` gleich neben diejenige
 `content.htm` Datei platzieren, die Sie durch den Import *überschreiben*
 lassen möchten (also legen Sie zuvor ein Backup an).
+
+<details>
+<summary>content.xml Schema-Definition</summary>
+
+````xml
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <ref name="Contents"/>
+  </start>
+
+  <define name="Contents">
+    <element name="contents">
+      <attribute name="version"/>
+      <zeroOrMore>
+        <ref name="Page"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="Page">
+    <element name="page">
+      <attribute name="title"/>
+      <element name="data">
+        <zeroOrMore>
+          <attribute>
+            <anyName/>
+            <text/>
+          </attribute>
+        </zeroOrMore>
+      </element>
+      <element name="content">
+        <text/>
+      </element>
+      <zeroOrMore>
+        <ref name="Page"/>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>
+````
+</details>
 
 Bei mehrsprachigen Websites muss der Inhalt jeder Sprache separat importiert
 und exportiert werden.

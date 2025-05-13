@@ -63,7 +63,45 @@
 <p>Die Lokalisierung wird unter <code>Sprache</code> vorgenommen. Sie können die Zeichenketten in Ihre eigene Sprache übersetzen, falls keine entsprechende Sprachdatei zur Verfügung steht, oder sie entsprechend Ihren Anforderungen anpassen.</p>
 <p>Das Aussehen von Exchange_XH kann unter <code>Stylesheet</code> angepasst werden.</p>
 <h2 id="verwendung">Verwendung</h2>
-<p>Sie können den Inhalt der aktuellen Sprache in der Hauptadministration des Plugins (<code>Plugins</code> → <code>Import/Export</code>) exportieren und importieren Nach erfolgreichem Export befindet sich die Datei <code>content.xml</code> im <code>content/</code> Ordner der aktuellen Sprache, gleich neben der <code>content.htm</code> Datei, aus der exportiert wurde. Um fremde Inhalte zu importieren, müssen Sie eine Datei <code>content.xml</code>, die ein passendes Format haben muss, gleich neben diejenige <code>content.htm</code> Datei platzieren, die Sie durch den Import <em>überschreiben</em> lassen möchten (also legen Sie zuvor ein Backup an).</p>
+<p>Sie können den Inhalt der aktuellen Sprache in der Hauptadministration des Plugins (<code>Plugins</code> → <code>Import/Export</code>) exportieren und importieren Nach erfolgreichem Export befindet sich die Datei <code>content.xml</code> im <code>content/</code> Ordner der aktuellen Sprache, gleich neben der <code>content.htm</code> Datei, aus der exportiert wurde. Um fremde Inhalte zu importieren, müssen Sie eine Datei <code>content.xml</code> gleich neben diejenige <code>content.htm</code> Datei platzieren, die Sie durch den Import <em>überschreiben</em> lassen möchten (also legen Sie zuvor ein Backup an).</p>
+<details>
+<p><summary>content.xml Schema-Definition</summary></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">&lt;grammar</span><span class="ot"> xmlns=</span><span class="st">&quot;http://relaxng.org/ns/structure/1.0&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="kw">&lt;start&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a>    <span class="kw">&lt;ref</span><span class="ot"> name=</span><span class="st">&quot;Contents&quot;</span><span class="kw">/&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="kw">&lt;/start&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a></span>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="kw">&lt;define</span><span class="ot"> name=</span><span class="st">&quot;Contents&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>    <span class="kw">&lt;element</span><span class="ot"> name=</span><span class="st">&quot;contents&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9"></a>      <span class="kw">&lt;attribute</span><span class="ot"> name=</span><span class="st">&quot;version&quot;</span><span class="kw">/&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10"></a>      <span class="kw">&lt;zeroOrMore&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11"></a>        <span class="kw">&lt;ref</span><span class="ot"> name=</span><span class="st">&quot;Page&quot;</span><span class="kw">/&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>      <span class="kw">&lt;/zeroOrMore&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13"></a>    <span class="kw">&lt;/element&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14"></a>  <span class="kw">&lt;/define&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a></span>
+<span id="cb1-16"><a href="#cb1-16"></a>  <span class="kw">&lt;define</span><span class="ot"> name=</span><span class="st">&quot;Page&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>    <span class="kw">&lt;element</span><span class="ot"> name=</span><span class="st">&quot;page&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18"></a>      <span class="kw">&lt;attribute</span><span class="ot"> name=</span><span class="st">&quot;title&quot;</span><span class="kw">/&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>      <span class="kw">&lt;element</span><span class="ot"> name=</span><span class="st">&quot;data&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a>        <span class="kw">&lt;zeroOrMore&gt;</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a>          <span class="kw">&lt;attribute&gt;</span></span>
+<span id="cb1-22"><a href="#cb1-22"></a>            <span class="kw">&lt;anyName/&gt;</span></span>
+<span id="cb1-23"><a href="#cb1-23"></a>            <span class="kw">&lt;text/&gt;</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a>          <span class="kw">&lt;/attribute&gt;</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a>        <span class="kw">&lt;/zeroOrMore&gt;</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a>      <span class="kw">&lt;/element&gt;</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a>      <span class="kw">&lt;element</span><span class="ot"> name=</span><span class="st">&quot;content&quot;</span><span class="kw">&gt;</span></span>
+<span id="cb1-28"><a href="#cb1-28"></a>        <span class="kw">&lt;text/&gt;</span></span>
+<span id="cb1-29"><a href="#cb1-29"></a>      <span class="kw">&lt;/element&gt;</span></span>
+<span id="cb1-30"><a href="#cb1-30"></a>      <span class="kw">&lt;zeroOrMore&gt;</span></span>
+<span id="cb1-31"><a href="#cb1-31"></a>        <span class="kw">&lt;ref</span><span class="ot"> name=</span><span class="st">&quot;Page&quot;</span><span class="kw">/&gt;</span></span>
+<span id="cb1-32"><a href="#cb1-32"></a>      <span class="kw">&lt;/zeroOrMore&gt;</span></span>
+<span id="cb1-33"><a href="#cb1-33"></a>    <span class="kw">&lt;/element&gt;</span></span>
+<span id="cb1-34"><a href="#cb1-34"></a>  <span class="kw">&lt;/define&gt;</span></span>
+<span id="cb1-35"><a href="#cb1-35"></a><span class="kw">&lt;/grammar&gt;</span></span></code></pre></div>
+</details>
 <p>Bei mehrsprachigen Websites muss der Inhalt jeder Sprache separat importiert und exportiert werden.</p>
 <p>Um zwischen CMSimple_XH Versionen zu migrieren, installieren Sie das Plugin zunächst in der alten Version, und exportieren Sie die Inhalte aller Sprachen. Dann muss das Plugin in der neuen Version installiert werden, die zuvor exportierten Inhalte der Sprachen müssen an die passenden Stellen der neuen Version kopiert werden, und alle Sprach-Inhalte müssen importiert werden.</p>
 <h2 id="einschränkungen">Einschränkungen</h2>

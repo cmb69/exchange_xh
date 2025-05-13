@@ -63,10 +63,51 @@ main administration of the plugin (`Plugins` → `Import/Export`).
 After successful export you find the file `content.xml` in the
 `content/` folder of the current language, right besides the
 `content.htm` from which it was exported. To import foreign
-contents, you have to place `content.xml`, which must have an
-appropriate format, right besides the `content.htm` that you want
+contents, you have to place `content.xml` right besides the `content.htm` that you want
 to be *overwritten* (so make sure you make a backup before) by
 the import.
+
+<details>
+<summary>content.xml schema definition</summary>
+
+````xml
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <ref name="Contents"/>
+  </start>
+
+  <define name="Contents">
+    <element name="contents">
+      <attribute name="version"/>
+      <zeroOrMore>
+        <ref name="Page"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="Page">
+    <element name="page">
+      <attribute name="title"/>
+      <element name="data">
+        <zeroOrMore>
+          <attribute>
+            <anyName/>
+            <text/>
+          </attribute>
+        </zeroOrMore>
+      </element>
+      <element name="content">
+        <text/>
+      </element>
+      <zeroOrMore>
+        <ref name="Page"/>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>
+````
+</details>
 
 For multilingual websites, each language content has to be imported and
 exported separately.

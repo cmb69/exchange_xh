@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <start>
+    <ref name="Contents"/>
+  </start>
+
+  <define name="Contents">
+    <element name="contents">
+      <attribute name="version"/>
+      <zeroOrMore>
+        <ref name="Page"/>
+      </zeroOrMore>
+    </element>
+  </define>
+
+  <define name="Page">
+    <element name="page">
+      <attribute name="title"/>
+      <element name="data">
+        <zeroOrMore>
+          <attribute>
+            <anyName/>
+            <text/>
+          </attribute>
+        </zeroOrMore>
+      </element>
+      <element name="content">
+        <text/>
+      </element>
+      <zeroOrMore>
+        <ref name="Page"/>
+      </zeroOrMore>
+    </element>
+  </define>
+</grammar>
