@@ -23,6 +23,8 @@ namespace Exchange\Model;
 
 class Page
 {
+    use XhPage;
+
     /** @var int */
     private $level;
 
@@ -37,29 +39,6 @@ class Page
 
     /** @var list<self> */
     private $children = [];
-
-    public static function fromXhString(?self $parent, string $title, string $contents): ?self
-    {
-        if (!preg_match('/\s*<\?php(.*?)\?>(.*)/isu', $contents, $submatches)) {
-            return null;
-        }
-        $content = (string) preg_replace('/^\s*|\s*(?:<\/body.*)?$/su', "", $submatches[2]);
-        if ($parent === null) {
-            return new self(1, $title, self::pageData($submatches[1]), $content);
-        } else {
-            return $parent->appendChild($title, self::pageData($submatches[1]), $content);
-        }
-    }
-
-    /** @return array<string,string> */
-    private static function pageData(string $php): array
-    {
-        eval($php);
-        if (isset($page_data[0])) { // @phpstan-ignore-line
-            return $page_data[0]; // @phpstan-ignore-line
-        }
-        return [];
-    }
 
     /** @param array<string,string> $data */
     public function __construct(int $level, string $title, array $data, string $content)
@@ -81,25 +60,5 @@ class Page
         $child = new self($this->level + 1, $title, $data, $content);
         $this->children[] = $child;
         return $child;
-    }
-
-    public function toXhString(): string
-    {
-        $res = "<!--XH_ml{$this->level}:{$this->title}-->\n";
-        $res .= "<?php\n\$page_data[]=array(\n";
-        foreach ($this->data as $key => $value) {
-            $res .= "'{$this->escape($key)}'=>'{$this->escape($value)}',\n";
-        }
-        $res .= ");\n?>\n";
-        $res .= "{$this->content}\n";
-        foreach ($this->children as $child) {
-            $res .= $child->toXhString();
-        }
-        return $res;
-    }
-
-    private function escape(string $value): string
-    {
-        return addcslashes($value, "\'\\");
     }
 }
