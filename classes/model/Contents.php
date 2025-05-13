@@ -21,6 +21,7 @@
 
 namespace Exchange\Model;
 
+use LogicException;
 use Plib\Document;
 use Plib\DocumentStore;
 
@@ -35,7 +36,7 @@ final class Contents implements Document
     /** @var list<Page> */
     private $pages = [];
 
-    public static function fromString(string $contents, string $key): ?self
+    public static function fromString(string $contents, string $key): self
     {
         switch (pathinfo($key, PATHINFO_EXTENSION)) {
             case "htm":
@@ -43,18 +44,22 @@ final class Contents implements Document
             case "xml":
                 return self::fromXmlString($contents);
             default:
-                return null;
+                throw new LogicException("only .htm and .xml are supported");
         }
     }
 
-    public static function retrieve(string $extension, DocumentStore $store): ?self
+    public static function retrieve(string $extension, DocumentStore $store): self
     {
-        return $store->retrieve("content.$extension", self::class);
+        $that = $store->retrieve("content.$extension", self::class);
+        assert($that instanceof self);
+        return $that;
     }
 
-    public static function update(string $extension, DocumentStore $store): ?self
+    public static function update(string $extension, DocumentStore $store): self
     {
-        return $store->update("content.$extension", self::class);
+        $that = $store->update("content.$extension", self::class);
+        assert($that instanceof self);
+        return $that;
     }
 
     public function __construct(string $extension)

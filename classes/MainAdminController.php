@@ -85,15 +85,7 @@ class MainAdminController
             return Response::create("not authorized"); // TODO i18n
         }
         $xml = Contents::update("xml", $this->store);
-        if ($xml === null) {
-            return Response::create("can't load XML"); // TODO
-        }
-        $htm = Contents::retrieve("htm", $this->store);
-        if ($htm === null) {
-            $this->store->rollback();
-            return Response::create("can't load HTM"); // TODO
-        }
-        $xml->copy($htm);
+        $xml->copy(Contents::retrieve("htm", $this->store));
         if ($this->store->commit()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported&normal');
         } else {
@@ -112,14 +104,7 @@ class MainAdminController
             return Response::create("not authorized"); // TODO i18n
         }
         $htm = Contents::update("htm", $this->store);
-        if ($htm === null) {
-            return Response::create("can't load HTML"); // TODO
-        }
-        $xml = Contents::retrieve("xml", $this->store);
-        if ($xml === null) {
-            return Response::create("can't load XML"); // TODO
-        }
-        $htm->copy($xml);
+        $htm->copy(Contents::retrieve("xml", $this->store));
         if ($this->store->commit()) {
             return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal');
         } else {

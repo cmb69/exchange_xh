@@ -25,16 +25,13 @@ use DOMDocument;
 
 trait XmlContents
 {
-    private static function fromXmlString(string $contents): ?self
+    private static function fromXmlString(string $contents): self
     {
-        if ($contents === "") {
-            return new self("xml");
-        }
+        $that = new self("xml");
         $root = simplexml_load_string($contents);
         if (!$root) {
-            return null;
+            return $that;
         }
-        $that = new self("xml");
         foreach ($root->page as $page) {
             $that->pages[] = Page::fromXml($page, 1);
         }
