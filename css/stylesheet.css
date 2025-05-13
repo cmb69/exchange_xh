@@ -1,6 +1,12 @@
 /* main screen */
 
 section.exchange_main {}
+section.exchange_main fieldset {
+    padding: 1em;
+}
+section.exchange_main legend {
+    padding: 0 0.5em;
+}
 
 /* info screen */
 
