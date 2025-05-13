@@ -42,8 +42,7 @@ trait XmlContents
     {
         $doc = new DOMDocument('1.0', 'UTF-8');
         $contents = $doc->createElement('contents');
-        // do we want to use the version of the running system?
-        $contents->setAttribute('version', (string) preg_replace('/^CMSimple_XH /', '', CMSIMPLE_XH_VERSION));
+        $contents->setAttribute("version", "2.0");
         $doc->appendChild($contents);
         foreach ($this->pages as $page) {
             $contents->appendChild($page->createPageElement($doc));

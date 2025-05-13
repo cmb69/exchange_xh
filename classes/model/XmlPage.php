@@ -42,7 +42,7 @@ trait XmlPage
     private static function pageDataFromXml(SimpleXMLElement $elt): array
     {
         $result = array();
-        foreach ($elt->pagedata->attributes() as $name => $value) {
+        foreach ($elt->data->attributes() as $name => $value) {
             $result[$name] = (string) $value;
         }
         return $result;
@@ -52,7 +52,6 @@ trait XmlPage
     {
         $elt = $doc->createElement('page');
         $elt->setAttribute('title', $this->title);
-        $elt->setAttribute('level', (string) $this->level);
         // do we need the URL?
         // $page->setAttribute('url', $this->pages->url($pageIndex));
         $elt->appendChild($this->createPageDataElement($doc, $this->data));
@@ -69,7 +68,7 @@ trait XmlPage
     /** @param array<string,string> $pageData */
     private function createPageDataElement(DOMDocument $doc, array $pageData): DOMElement
     {
-        $element = $doc->createElement('pagedata');
+        $element = $doc->createElement('data');
         foreach ($pageData as $key => $value) {
             $element->setAttribute($key, $value);
         }
