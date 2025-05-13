@@ -44,12 +44,9 @@ class MainAdminController
         DocumentStore $store,
         View $view
     ) {
-        global $title;
-
         $this->csrfProtector = $csrfProtector;
         $this->store = $store;
         $this->view = $view;
-        $title = $this->view->plain("menu_main");
     }
 
     public function __invoke(Request $request): Response
@@ -76,7 +73,7 @@ class MainAdminController
             "import_url" => $url->with("action", "import")->relative(),
             "csrfToken" => $this->csrfProtector->token(),
             "hasXmlFile" => !empty($this->store->find('/^content\.xml$/')),
-        ]));
+        ]))->withTitle($this->view->text("menu_main"));
     }
 
     private function exportAction(Request $request): Response
@@ -95,7 +92,8 @@ class MainAdminController
 
     private function exportedAction(): Response
     {
-        return Response::create($this->view->message("success", "message_exported"));
+        return Response::create($this->view->message("success", "message_exported"))
+            ->withTitle($this->view->text("menu_main"));
     }
 
     private function importAction(Request $request): Response
@@ -114,6 +112,7 @@ class MainAdminController
 
     private function importedAction(): Response
     {
-        return Response::create($this->view->message("success", "message_imported"));
+        return Response::create($this->view->message("success", "message_imported"))
+            ->withTitle($this->view->text("menu_main"));
     }
 }

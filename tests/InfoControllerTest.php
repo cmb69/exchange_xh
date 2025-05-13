@@ -37,6 +37,7 @@ class InfoControllerTest extends TestCase
     public function testShowsPluginInfo(): void
     {
         $response = $this->sut()();
-        Approvals::verifyHtml($response);
+        $this->assertSame("Exchange 1.1-dev", $response->title());
+        Approvals::verifyHtml($response->output());
     }
 }

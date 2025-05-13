@@ -14,7 +14,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 ?>
 
 <section class="exchange_main">
-  <h1>Exchange – <?=$this->text('menu_main')?></h1>
+  <h1><?=$this->text('menu_main')?></h1>
   <form method="post">
     <input type="hidden" name="exchange_token" value="<?=$this->esc($csrfToken)?>">
 <?if ($hasXmlFile):?>

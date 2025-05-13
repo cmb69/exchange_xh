@@ -21,6 +21,7 @@
 
 namespace Exchange;
 
+use Plib\Response;
 use Plib\SystemChecker;
 use Plib\View;
 
@@ -42,13 +43,13 @@ class InfoController
         $this->view = $view;
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
-        return $this->view->render("info", [
+        return Response::create($this->view->render("info", [
             "version" => Dic::VERSION,
             "logo" => $this->pluginFolder . "exchange.png",
             "checks" => $this->getChecks(),
-        ]);
+        ]))->withTitle("Exchange " . $this->view->esc(Dic::VERSION));
     }
 
     /** @return array<object> */

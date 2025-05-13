@@ -44,6 +44,7 @@ class MainAdminControllerTest extends TestCase
     {
         $request = new FakeRequest(["url" => "http://example.com/?&exchange&admin=plugin_main&action=plugin_tx"]);
         $response = $this->sut()($request);
+        $this->assertSame("Import/Export", $response->title());
         Approvals::verifyHtml($response->output());
     }
 
@@ -87,6 +88,7 @@ class MainAdminControllerTest extends TestCase
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=exported",
         ]);
         $response = $this->sut()($request);
+        $this->assertSame("Import/Export", $response->title());
         $this->assertStringContainsString(
             "The current content file has been exported.",
             $response->output()
@@ -133,6 +135,7 @@ class MainAdminControllerTest extends TestCase
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=imported",
         ]);
         $response = $this->sut()($request);
+        $this->assertSame("Import/Export", $response->title());
         $this->assertStringContainsString(
             "The contents have been imported.",
             $response->output()
