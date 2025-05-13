@@ -14,7 +14,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 <h1>Exchange <?=$this->esc($version)?></h1>
 <div class="exchange_syscheck">
   <h2><?=$this->text('syscheck_title')?></h2>
-<?php foreach ($checks as $check):?>
+<?foreach ($checks as $check):?>
   <p class="xh_<?=$this->esc($check->state)?>"><?=$this->text('syscheck_message', $check->label, $check->stateLabel)?></p>
-<?php endforeach?>
+<?endforeach?>
 </div>
