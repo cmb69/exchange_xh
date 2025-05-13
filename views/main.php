@@ -22,7 +22,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 <?if ($hasXmlFile):?>
       <p class="xh_warning"><?=$this->text('message_export_overwrite')?></p>
 <?endif?>
-      <p>
+      <p class="exchange_buttons">
         <button formaction="<?=$this->esc($export_url)?>"><?=$this->text('label_export')?></button>
       </p>
     </fieldset>
@@ -30,7 +30,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
       <legend><?=$this->text('label_import')?></legend>
 <?if ($hasXmlFile):?>
       <p class="xh_warning"><?=$this->text('message_import_overwrite')?></p>
-      <p>
+      <p class="exchange_buttons">
         <button formaction="<?=$this->esc($import_url)?>"><?=$this->text('label_import')?></button>
       </p>
 <?else:?>
