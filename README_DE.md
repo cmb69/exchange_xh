@@ -18,7 +18,7 @@ CMSimple_XH Versionen.
 ## Voraussetzungen
 
 Exchange_XH ist ein Plugin für [CMSimple_XH](https://cmsimple-xh.org/de/).
-Es benötigt CMSimple_XH ≥ 1.7.0 und PHP ≥ 7.1.0 mit der DOM und SimpleXML Extension.
+Es benötigt CMSimple_XH ≥ 1.7.0 und PHP ≥ 7.1.0 mit der DOM Extension.
 Exchange_XH benötigt weiterhin [Plib_XH](https://github.com/cmb69/plib_xh) ≥ 1.8;
 ist dieses noch nicht installiert (siehe `Einstellungen` → `Info`),
 laden Sie das [aktuelle Release](https://github.com/cmb69/plib_xh/releases/latest)

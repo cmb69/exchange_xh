@@ -22,18 +22,25 @@
 namespace Exchange\Model;
 
 use DOMDocument;
+use DOMElement;
 
 trait XmlContents
 {
     private static function fromXmlString(string $contents): self
     {
         $that = new self("xml");
-        $root = simplexml_load_string($contents);
-        if (!$root) {
+        if ($contents === "") {
             return $that;
         }
-        foreach ($root->page as $page) {
-            $that->pages[] = Page::fromXml($page, 1);
+        $doc = new DOMDocument("1.0", "UTF-8");
+        if (!$doc->loadXML($contents)) {
+            return $that;
+        }
+        assert($doc->documentElement instanceof DOMElement);
+        foreach ($doc->documentElement->childNodes as $node) {
+            if ($node instanceof DOMElement && $node->nodeName === "page") {
+                $that->pages[] = Page::fromXml($node, 1);
+            }
         }
         return $that;
     }

@@ -23,15 +23,17 @@ namespace Exchange\Model;
 
 use DOMDocument;
 use DOMElement;
-use SimpleXMLElement;
+use DOMNode;
 
 trait XmlPage
 {
-    public static function fromXml(SimpleXMLElement $elt, int $level): self
+    public static function fromXml(DOMElement $elt, int $level): self
     {
-        $that = new self($level, $elt["title"] ?? "unknown", self::pageDataFromXml($elt), $elt->content);
-        if (isset($elt->page)) {
-            foreach ($elt->page as $child) {
+        $node = $elt->getElementsByTagName("content")->item(0);
+        $content = $node !== null ? ($node->nodeValue ?? "") : "";
+        $that = new self($level, $elt->getAttribute("title"), self::pageDataFromXml($elt), $content);
+        foreach ($elt->childNodes as $child) {
+            if ($child instanceof DOMElement && $child->nodeName === "page") {
                 $that->children[] = self::fromXml($child, $level + 1);
             }
         }
@@ -39,11 +41,15 @@ trait XmlPage
     }
 
     /** @return array<string,string> */
-    private static function pageDataFromXml(SimpleXMLElement $elt): array
+    private static function pageDataFromXml(DOMElement $elt): array
     {
-        $result = array();
-        foreach ($elt->data->attributes() as $name => $value) {
-            $result[$name] = (string) $value;
+        $result = [];
+        $dataNode = $elt->getElementsByTagName("data")->item(0);
+        assert($dataNode instanceof DOMElement);
+        foreach ($dataNode->attributes as $name => $node) {
+            if ($node instanceof DOMNode) {
+                $result[$name] = $node->nodeValue ?? "";
+            }
         }
         return $result;
     }

@@ -58,7 +58,6 @@ class InfoController
         return array(
             $this->checkPhpVersion('7.1.0'),
             $this->checkExtension('DOM'),
-            $this->checkExtension('SimpleXML'),
             $this->checkXhVersion('1.7.0'),
             $this->checkWritability($this->pluginFolder . "css/"),
             $this->checkWritability($this->pluginFolder . "languages/")
