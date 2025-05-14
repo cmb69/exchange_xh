@@ -45,10 +45,47 @@ trait XhContents
                         break;
                     }
                     $page = $that->popPage();
-                };
+                }
                 $parent = $level === 1 ? null : $that->peekPage();
             }
-            $page = Page::fromXhString($parent, $title, $rest);
+            $page = Page::fromXhString($parent, $title, "", $rest);
+            if ($page === null) {
+                continue; // ignore page; alternative: return null
+            }
+            $that->pages[] = $page;
+            $prevLevel = $level;
+        }
+        $that->popNonToplevelPages();
+        return $that;
+    }
+
+    public static function fromXh16String(string $contents, int $ml): self
+    {
+        $that = new self("htm");
+        $matches = preg_split("/(<h([1-$ml]).*?>(.*?)<\/h\\2>)/s", $contents, -1, PREG_SPLIT_DELIM_CAPTURE);
+        if ($matches === false) {
+            return $that;
+        }
+        $prevLevel = 0;
+        // ignoring the prolog ($matches[0]) since that doesn't seem to be necessary
+        for ($i = 1; $i < count($matches); $i += 4) {
+            $heading = $matches[$i];
+            $level = (int) $matches[$i + 1];
+            $title = trim(html_entity_decode(strip_tags($matches[$i + 2])));
+            $rest = $matches[$i + 3];
+            if ($level > $prevLevel) {
+                $parent = empty($that->pages) ? null : $that->peekPage();
+            } else {
+                while (true) {
+                    $page = $that->peekPage();
+                    if (($page->level() < max(2, $level))) {
+                        break;
+                    }
+                    $page = $that->popPage();
+                }
+                $parent = $level === 1 ? null : $that->peekPage();
+            }
+            $page = Page::fromXhString($parent, $title, $heading, $rest);
             if ($page === null) {
                 continue; // ignore page; alternative: return null
             }

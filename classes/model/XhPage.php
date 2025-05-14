@@ -23,12 +23,12 @@ namespace Exchange\Model;
 
 trait XhPage
 {
-    public static function fromXhString(?self $parent, string $title, string $contents): ?self
+    public static function fromXhString(?self $parent, string $title, string $heading, string $contents): ?self
     {
         if (!preg_match('/\s*<\?php(.*?)\?>(.*)/isu', $contents, $submatches)) {
             return null;
         }
-        $content = (string) preg_replace('/^\s*|\s*(?:<\/body.*)?$/su', "", $submatches[2]);
+        $content = (string) preg_replace('/^\s*|\s*(?:<\/body.*)?$/su', "", $heading . $submatches[2]);
         if ($parent === null) {
             return new self(1, $title, self::pageData($submatches[1]), $content);
         } else {

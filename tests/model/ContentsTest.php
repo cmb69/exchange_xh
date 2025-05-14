@@ -65,4 +65,10 @@ class ContentsTest extends TestCase
         $this->assertSame(2, $actual->pageCount());
         $this->assertSame(1, $actual->page(1)->level());
     }
+
+    public function testReadsXh16Contents(): void
+    {
+        $actual = Contents::fromXh16String(file_get_contents(__DIR__ . "/content.htm"), 3);
+        Approvals::verifyHtml($actual->toString());
+    }
 }
