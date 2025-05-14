@@ -36,6 +36,9 @@ trait XmlContents
         if (!$doc->loadXML($contents)) {
             return $that;
         }
+        if (!$doc->relaxNGValidate(__DIR__ . "/../../contents.rng")) {
+            return $that;
+        }
         assert($doc->documentElement instanceof DOMElement);
         foreach ($doc->documentElement->childNodes as $node) {
             if ($node instanceof DOMElement && $node->nodeName === "page") {
@@ -53,6 +56,9 @@ trait XmlContents
         $doc->appendChild($contents);
         foreach ($this->pages as $page) {
             $contents->appendChild($page->createPageElement($doc));
+        }
+        if (!$doc->relaxNGValidate(__DIR__ . "/../../contents.rng")) {
+            return "";
         }
         $doc->formatOutput = true;
         return (string) $doc->saveXML();

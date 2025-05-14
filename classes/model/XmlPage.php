@@ -30,8 +30,8 @@ trait XmlPage
     public static function fromXml(DOMElement $elt, int $level): self
     {
         $node = $elt->getElementsByTagName("content")->item(0);
-        $content = $node !== null ? ($node->nodeValue ?? "") : "";
-        $that = new self($level, $elt->getAttribute("title"), self::pageDataFromXml($elt), $content);
+        assert($node instanceof DOMNode);
+        $that = new self($level, $elt->getAttribute("title"), self::pageDataFromXml($elt), $node->nodeValue ?? "");
         foreach ($elt->childNodes as $child) {
             if ($child instanceof DOMElement && $child->nodeName === "page") {
                 $that->children[] = self::fromXml($child, $level + 1);
