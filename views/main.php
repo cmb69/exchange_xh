@@ -18,7 +18,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 <section class="exchange_main">
   <h1><?=$this->text('menu_main')?></h1>
   <form method="post">
-    <fieldset>
+    <fieldset class="exchange_export">
       <legend><?=$this->text('label_export')?></legend>
       <input type="hidden" name="exchange_token" value="<?=$this->esc($csrfToken)?>">
 <?if ($hasXmlFile):?>
@@ -28,7 +28,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
         <button formaction="<?=$this->esc($export_url)?>"><?=$this->text('label_export')?></button>
       </p>
     </fieldset>
-    <fieldset>
+    <fieldset class="exchange_import">
       <legend><?=$this->text('label_import')?></legend>
 <?if ($hasXmlFile):?>
       <p class="xh_warning"><?=$this->text('message_import_overwrite')?></p>
@@ -39,7 +39,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
       <p class="xh_info"><?=$this->text('message_no_import')?></p>
 <?endif?>
     </fieldset>
-    <fieldset>
+    <fieldset class="exchange_import16">
       <legend><?=$this->text('label_import_16')?></legend>
 <?if ($has16File):?>
       <p class="xh_warning"><?=$this->text('message_import_overwrite')?></p>

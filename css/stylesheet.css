@@ -12,6 +12,9 @@ section.exchange_main p.exchange_buttons {
     display: flex;
     justify-content: space-around;
 }
+section.exchange_main fieldset.exchange_export {}
+section.exchange_main fieldset.exchange_import {}
+section.exchange_main fieldset.exchange_import16 {}
 
 /* info screen */
 
