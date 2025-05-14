@@ -30,7 +30,7 @@
 </head>
 <body>
 <h1 id="exchange_xh">Exchange_XH</h1>
-<p>Exchange_XH ermöglicht den Export und Import der Inhalte einer CMSimple_XH Website nach beziehungsweise von XML. Dies kann nützlich für die Migration zu und von anderen CMSen sein. Weiterhin unterstützt das Plugin den Import von CMSimple_XH 1.6.x Inhalten in CMSimple_XH ≥ 1.7.0.</p>
+<p>Exchange_XH ermöglicht den Export und Import der Inhalte einer CMSimple_XH Website nach beziehungsweise von XML. Dies kann nützlich für die Migration zu und von anderen Content-Management-Systemen sein. Weiterhin unterstützt das Plugin den Import von CMSimple_XH 1.6.x Inhalten in CMSimple_XH ≥ 1.7.0.</p>
 <ul>
 <li><a href="#voraussetzungen">Voraussetzungen</a></li>
 <li><a href="#download">Download</a></li>
@@ -106,6 +106,7 @@
 <span id="cb1-35"><a href="#cb1-35"></a><span class="kw">&lt;/grammar&gt;</span></span></code></pre></div>
 </details>
 <p>Bei mehrsprachigen Websites muss der Inhalt jeder Sprache separat importiert und exportiert werden.</p>
+<p>Es ist zu beachten, dass der Import/Export von oder in andere Content-Management-Systeme nicht direkt möglich ist. Das XML-Format ist nur ein hilfreicher Zwischenschritt, aber es ist gewiss nötig, eine Transformation von oder zu den tatsächlichen Export/Import-Formaten des anderen Content-Management-Systems durchzuführen. Wie das genau erfolgt hängt offensichtlich vom jeweiligen Content-Management-System ab, und die Details gehen über den Rahmen dieser Dokumentation hinaus. Benötigen Sie Hilfe dabei, siehe <a href="#problembehebung">Problembehebung</a>.</p>
 <h3 id="import-von-alten-cmsimple_xh-inhalten">Import von alten CMSimple_XH Inhalten</h3>
 <p>Um Inhalte von CMSimple_XH 1.6.x zu importieren, muss die alte <code>content.htm</code> in <code>content.1.6.htm</code> umbenannt, und im <code>content/</code> Ordner der neuen CMSimple_XH Installation abgelegt werden. Unter <code>Plugins</code> → <code>Import/Export</code> kann dann im <code>Import von CMSimple_XH 1.6 Inhalten</code> Abschnitt der <code>Import</code> angestoßen werden. Für mehrsprachige Websites muss dies für jede Sprach durchgeführt werden.</p>
 <h2 id="einschränkungen">Einschränkungen</h2>

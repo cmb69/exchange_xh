@@ -30,7 +30,7 @@
 </head>
 <body>
 <h1 id="exchange_xh">Exchange_XH</h1>
-<p>Exchange_XH facilitates exporting and importing the contents of a CMSimple_XH website to and from XML, respectively. This may be helpful for the migration to or from other CMSs. The plugin also supports importing the contents of CMSimple_XH 1.6.x into CMSimple_XH ≥ 1.7.0.</p>
+<p>Exchange_XH facilitates exporting and importing the contents of a CMSimple_XH website to and from XML, respectively. This may be helpful for the migration to or from other content management systems. The plugin also supports importing the contents of CMSimple_XH 1.6.x into CMSimple_XH ≥ 1.7.0.</p>
 <ul>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#download">Download</a></li>
@@ -106,6 +106,7 @@ mouse. -->
 <span id="cb1-35"><a href="#cb1-35"></a><span class="kw">&lt;/grammar&gt;</span></span></code></pre></div>
 </details>
 <p>For multilingual websites, each language content has to be imported and exported separately.</p>
+<p>Note that import/export from or to other content management systems will not work out of the box. The XML format is just a helpful step, but you certainly need to transform from or to the actual export/import formats of the other content management systems. How this can be done exactly, depends obviously on the other content managements import/export facilities, and the details are out of scope for this documentation. If you need help with this, see the <a href="#troubleshooting">Troubleshooting section</a>.</p>
 <h3 id="import-old-cmsimple_xh-contents">Import old CMSimple_XH Contents</h3>
 <p>To import the contents of CMSimple_XH 1.6.x, you need to rename the old <code>content.htm</code> to <code>content.1.6.htm</code>, and put it in the <code>content/</code> folder of the new CMSimple_XH installation. Then go to <code>Plugins</code> → <code>Import/Export</code> and press the <code>Import</code> button in the <code>Import CMSimple_XH 1.6 contents</code> section. For multilingual websites, this needs to be done for each language.</p>
 <h2 id="limitations">Limitations</h2>

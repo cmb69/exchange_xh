@@ -2,10 +2,9 @@
 
 Exchange_XH ermöglicht den Export und Import der Inhalte einer CMSimple_XH
 Website nach beziehungsweise von XML. Dies kann nützlich für die Migration
-zu und von anderen CMSen sein.
+zu und von anderen Content-Management-Systemen sein.
 Weiterhin unterstützt das Plugin den Import von CMSimple_XH 1.6.x Inhalten
 in CMSimple_XH ≥ 1.7.0.
-
 
 - [Voraussetzungen](#voraussetzungen)
 - [Download](#download)
@@ -115,6 +114,14 @@ lassen möchten (also legen Sie zuvor ein Backup an).
 
 Bei mehrsprachigen Websites muss der Inhalt jeder Sprache separat importiert
 und exportiert werden.
+
+Es ist zu beachten, dass der Import/Export von oder in andere Content-Management-Systeme
+nicht direkt möglich ist. Das XML-Format ist nur ein hilfreicher Zwischenschritt,
+aber es ist gewiss nötig, eine Transformation von oder zu den tatsächlichen
+Export/Import-Formaten des anderen Content-Management-Systems durchzuführen.
+Wie das genau erfolgt hängt offensichtlich vom jeweiligen Content-Management-System
+ab, und die Details gehen über den Rahmen dieser Dokumentation hinaus.
+Benötigen Sie Hilfe dabei, siehe [Problembehebung](#problembehebung).
 
 ### Import von alten CMSimple_XH Inhalten
 
