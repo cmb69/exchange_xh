@@ -12,6 +12,7 @@ in CMSimple_XH ≥ 1.7.0.
 - [Einstellungen](#einstellungen)
 - [Verwendung](#verwendung)
   - [Import von alten CMSimple_XH Inhalten](#import-von-alten-cmsimple_xh-inhalten)
+  - [Für Entwickler](#für-entwickler)
 - [Einschränkungen](#einschränkungen)
 - [Problembehebung](#problembehebung)
 - [Lizenz](#lizenz)
@@ -131,6 +132,37 @@ CMSimple_XH Installation abgelegt werden. Unter `Plugins` → `Import/Export`
 kann dann im `Import von CMSimple_XH 1.6 Inhalten` Abschnitt der `Import`
 angestoßen werden.  Für mehrsprachige Websites muss dies für jede Sprach
 durchgeführt werden.
+
+### Für Entwickler
+
+Exchange_XH stellt eine API zur Verfügung, mit der Seiten an eine bestehende
+CMSimple_XH Installation direkt angefügt werden können, d.h. ohne dass der
+Webmaster einen Satz exportierter Seiten importieren muss. Diese API ist
+allerdings etwas experimentell, und könnte sich in Zukunft ändern. Anstatt
+einer ausführlichen Erklärung folgt ein einfaches Beispiel, das zeigt, wie
+eine Seite mit einer versteckten Unterseite angefügt werden kann:
+
+````php
+$store = new \Plib\DocumentStore($pth["folder"]["content"]);
+$contents = \Exchange\Model\Contents::update("htm", $store);
+$page = $contents->appendPage(
+    "Neue Seite",
+    [],
+    "<h1>Neue Seite</h1><p>lorem ipsum</p>"
+);
+$page->appendChild(
+    "Neue versteckte Seite",
+    ["linked_to_menu" => "0"],
+    "<h1Neue versteckte Seite</h1><p>lorem ipsum</p>"
+);
+if (!$store->commit()) {
+    // something went wrong
+}
+````
+
+Ist alles gut gegangen, dann gibt es nun eine neue Toplevel-Seite `Neue Seite`,
+die an die Liste der Toplevel-Seiten angefügt wurde. Der Webmaster kann diese
+Seite nun leicht woanders hin verschieben, indem er den Pagemanager nutzt.
 
 ## Einschränkungen
 

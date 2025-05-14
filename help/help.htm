@@ -39,6 +39,7 @@
 <li><a href="#usage">Usage</a>
 <ul>
 <li><a href="#import-old-cmsimple_xh-contents">Import old CMSimple_XH Contents</a></li>
+<li><a href="#for-developers">For Developers</a></li>
 </ul></li>
 <li><a href="#limitations">Limitations</a></li>
 <li><a href="#troubleshooting">Troubleshooting</a></li>
@@ -109,6 +110,24 @@ mouse. -->
 <p>Note that import/export from or to other content management systems will not work out of the box. The XML format is just a helpful step, but you certainly need to transform from or to the actual export/import formats of the other content management systems. How this can be done exactly, depends obviously on the other content managements import/export facilities, and the details are out of scope for this documentation. If you need help with this, see the <a href="#troubleshooting">Troubleshooting section</a>.</p>
 <h3 id="import-old-cmsimple_xh-contents">Import old CMSimple_XH Contents</h3>
 <p>To import the contents of CMSimple_XH 1.6.x, you need to rename the old <code>content.htm</code> to <code>content.1.6.htm</code>, and put it in the <code>content/</code> folder of the new CMSimple_XH installation. Then go to <code>Plugins</code> → <code>Import/Export</code> and press the <code>Import</code> button in the <code>Import CMSimple_XH 1.6 contents</code> section. For multilingual websites, this needs to be done for each language.</p>
+<h3 id="for-developers">For Developers</h3>
+<p>Exchange_XH exposes an API to append pages to an existing CMSimple_XH installation directly, i.e. without actually requiring the Webmaster to import a set of exported pages. This API is somewhat experimental, and might change in the future, though. Instead of a lengthy explanation, a simple example that shows how to append a page with a hidden subpage:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">$store</span> = <span class="kw">new</span> \Plib\DocumentStore<span class="ot">(</span><span class="kw">$pth</span><span class="ot">[</span><span class="st">&quot;folder&quot;</span><span class="ot">][</span><span class="st">&quot;content&quot;</span><span class="ot">]);</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">$contents</span> = \Exchange\Model\Contents::update<span class="ot">(</span><span class="st">&quot;htm&quot;</span><span class="ot">,</span> <span class="kw">$store</span><span class="ot">);</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">$page</span> = <span class="kw">$contents</span>-&gt;appendPage<span class="ot">(</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="st">&quot;New Page&quot;</span><span class="ot">,</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="ot">[],</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="st">&quot;&lt;h1&gt;New Page&lt;/h1&gt;&lt;p&gt;lorem ipsum&lt;/p&gt;&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="ot">);</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="kw">$page</span>-&gt;appendChild<span class="ot">(</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="st">&quot;New hidden page&quot;</span><span class="ot">,</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="ot">[</span><span class="st">&quot;linked_to_menu&quot;</span> =&gt; <span class="st">&quot;0&quot;</span><span class="ot">],</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    <span class="st">&quot;&lt;h1&gt;New hidden page&lt;/h1&gt;&lt;p&gt;lorem ipsum&lt;/p&gt;&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="ot">);</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="kw">if</span> <span class="ot">(</span>!<span class="kw">$store</span>-&gt;commit<span class="ot">())</span> {</span>
+<span id="cb2-14"><a href="#cb2-14"></a>    <span class="co">// something went wrong</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>}</span></code></pre></div>
+<p>If everything went well, there is now a new toplevel page <code>New Page</code> appended to the list of toplevel pages. The Webmaster can easily move this to somewhere else by using the Pagemanager.</p>
 <h2 id="limitations">Limitations</h2>
 <p>When importing old CMSimple_XH 1.6.x contents, only the most basic adjustments are made, but the HTML headings are not changed in any way. You may want to do this manually after importing, so that your pages have a proper HTML heading outline.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>

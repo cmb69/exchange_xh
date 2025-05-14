@@ -12,6 +12,7 @@ into CMSimple_XH ≥ 1.7.0.
 - [Settings](#settings)
 - [Usage](#usage)
   - [Import old CMSimple_XH Contents](#import-old-cmsimple_xh-contents)
+  - [For Developers](#for-developers)
 - [Limitations](#limitations)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
@@ -130,6 +131,36 @@ the new CMSimple_XH installation.  Then go to `Plugins` → `Import/Export`
 and press the `Import` button in the `Import CMSimple_XH 1.6 contents`
 section.  For multilingual websites, this needs to be done for each
 language.
+
+### For Developers
+
+Exchange_XH exposes an API to append pages to an existing CMSimple_XH
+installation directly, i.e. without actually requiring the Webmaster to import
+a set of exported pages.  This API is somewhat experimental, and might change
+in the future, though.  Instead of a lengthy explanation, a simple example that
+shows how to append a page with a hidden subpage:
+
+````php
+$store = new \Plib\DocumentStore($pth["folder"]["content"]);
+$contents = \Exchange\Model\Contents::update("htm", $store);
+$page = $contents->appendPage(
+    "New Page",
+    [],
+    "<h1>New Page</h1><p>lorem ipsum</p>"
+);
+$page->appendChild(
+    "New hidden page",
+    ["linked_to_menu" => "0"],
+    "<h1>New hidden page</h1><p>lorem ipsum</p>"
+);
+if (!$store->commit()) {
+    // something went wrong
+}
+````
+
+If everything went well, there is now a new toplevel page `New Page` appended
+to the list of toplevel pages.  The Webmaster can easily move this to somewhere
+else by using the Pagemanager.
 
 ## Limitations
 

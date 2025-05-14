@@ -39,6 +39,7 @@
 <li><a href="#verwendung">Verwendung</a>
 <ul>
 <li><a href="#import-von-alten-cmsimple_xh-inhalten">Import von alten CMSimple_XH Inhalten</a></li>
+<li><a href="#für-entwickler">Für Entwickler</a></li>
 </ul></li>
 <li><a href="#einschränkungen">Einschränkungen</a></li>
 <li><a href="#problembehebung">Problembehebung</a></li>
@@ -109,6 +110,24 @@
 <p>Es ist zu beachten, dass der Import/Export von oder in andere Content-Management-Systeme nicht direkt möglich ist. Das XML-Format ist nur ein hilfreicher Zwischenschritt, aber es ist gewiss nötig, eine Transformation von oder zu den tatsächlichen Export/Import-Formaten des anderen Content-Management-Systems durchzuführen. Wie das genau erfolgt hängt offensichtlich vom jeweiligen Content-Management-System ab, und die Details gehen über den Rahmen dieser Dokumentation hinaus. Benötigen Sie Hilfe dabei, siehe <a href="#problembehebung">Problembehebung</a>.</p>
 <h3 id="import-von-alten-cmsimple_xh-inhalten">Import von alten CMSimple_XH Inhalten</h3>
 <p>Um Inhalte von CMSimple_XH 1.6.x zu importieren, muss die alte <code>content.htm</code> in <code>content.1.6.htm</code> umbenannt, und im <code>content/</code> Ordner der neuen CMSimple_XH Installation abgelegt werden. Unter <code>Plugins</code> → <code>Import/Export</code> kann dann im <code>Import von CMSimple_XH 1.6 Inhalten</code> Abschnitt der <code>Import</code> angestoßen werden. Für mehrsprachige Websites muss dies für jede Sprach durchgeführt werden.</p>
+<h3 id="für-entwickler">Für Entwickler</h3>
+<p>Exchange_XH stellt eine API zur Verfügung, mit der Seiten an eine bestehende CMSimple_XH Installation direkt angefügt werden können, d.h. ohne dass der Webmaster einen Satz exportierter Seiten importieren muss. Diese API ist allerdings etwas experimentell, und könnte sich in Zukunft ändern. Anstatt einer ausführlichen Erklärung folgt ein einfaches Beispiel, das zeigt, wie eine Seite mit einer versteckten Unterseite angefügt werden kann:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">$store</span> = <span class="kw">new</span> \Plib\DocumentStore<span class="ot">(</span><span class="kw">$pth</span><span class="ot">[</span><span class="st">&quot;folder&quot;</span><span class="ot">][</span><span class="st">&quot;content&quot;</span><span class="ot">]);</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">$contents</span> = \Exchange\Model\Contents::update<span class="ot">(</span><span class="st">&quot;htm&quot;</span><span class="ot">,</span> <span class="kw">$store</span><span class="ot">);</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="kw">$page</span> = <span class="kw">$contents</span>-&gt;appendPage<span class="ot">(</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>    <span class="st">&quot;Neue Seite&quot;</span><span class="ot">,</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>    <span class="ot">[],</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>    <span class="st">&quot;&lt;h1&gt;Neue Seite&lt;/h1&gt;&lt;p&gt;lorem ipsum&lt;/p&gt;&quot;</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="ot">);</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="kw">$page</span>-&gt;appendChild<span class="ot">(</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>    <span class="st">&quot;Neue versteckte Seite&quot;</span><span class="ot">,</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>    <span class="ot">[</span><span class="st">&quot;linked_to_menu&quot;</span> =&gt; <span class="st">&quot;0&quot;</span><span class="ot">],</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a>    <span class="st">&quot;&lt;h1Neue versteckte Seite&lt;/h1&gt;&lt;p&gt;lorem ipsum&lt;/p&gt;&quot;</span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="ot">);</span></span>
+<span id="cb2-13"><a href="#cb2-13"></a><span class="kw">if</span> <span class="ot">(</span>!<span class="kw">$store</span>-&gt;commit<span class="ot">())</span> {</span>
+<span id="cb2-14"><a href="#cb2-14"></a>    <span class="co">// something went wrong</span></span>
+<span id="cb2-15"><a href="#cb2-15"></a>}</span></code></pre></div>
+<p>Ist alles gut gegangen, dann gibt es nun eine neue Toplevel-Seite <code>Neue Seite</code>, die an die Liste der Toplevel-Seiten angefügt wurde. Der Webmaster kann diese Seite nun leicht woanders hin verschieben, indem er den Pagemanager nutzt.</p>
 <h2 id="einschränkungen">Einschränkungen</h2>
 <p>Beim Import von alten CMSimple_XH 1.6.x Inhalten werden nur die grundsätzlichen Änderungen vorgenommen, aber die HTML-Headings werden nicht geändert. Es ist empfehlenswert dies nach dem Import manuell vorzunehmen, so dass die Seiten eine ordnungsgemäße HTML-Heading-Struktur aufweisen.</p>
 <h2 id="problembehebung">Problembehebung</h2>
