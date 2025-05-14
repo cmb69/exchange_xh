@@ -28,7 +28,7 @@ use Plib\View;
 
 class Dic
 {
-    public const VERSION = "2.0-dev";
+    public const VERSION = "2.0";
 
     public static function mainAdminController(): MainAdminController
     {
