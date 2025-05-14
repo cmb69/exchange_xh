@@ -77,7 +77,7 @@ class MainAdminControllerTest extends TestCase
         $response = $this->sut()($request);
         $this->assertFileExists(vfsStream::url("root/content.xml"));
         $this->assertSame(
-            "http://example.com/?&exchange&admin=plugin_main&action=exported&normal",
+            "http://example.com/?&exchange&admin=plugin_main&action=exported",
             $response->location()
         );
     }
@@ -124,7 +124,7 @@ class MainAdminControllerTest extends TestCase
         $response = $this->sut()($request);
         $this->assertFileExists(vfsStream::url("root/content.htm"));
         $this->assertSame(
-            "http://example.com/?&exchange&admin=plugin_main&action=imported&normal",
+            "http://example.com/?&exchange&admin=plugin_main&action=imported",
             $response->location()
         );
     }
@@ -171,7 +171,7 @@ class MainAdminControllerTest extends TestCase
         $response = $this->sut()($request);
         $this->assertFileExists(vfsStream::url("root/content.htm"));
         $this->assertSame(
-            "http://example.com/?&exchange&admin=plugin_main&action=imported&normal",
+            "http://example.com/?&exchange&admin=plugin_main&action=imported",
             $response->location()
         );
     }
