@@ -88,7 +88,7 @@ class MainAdminController
         $xml = Contents::update("xml", $this->store);
         $xml->copy(Contents::retrieve("htm", $this->store));
         if ($this->store->commit()) {
-            return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=exported');
+            return Response::redirect($request->url()->with("action", "exported")->absolute());
         } else {
             return Response::create($this->view->message("fail", "message_export_failed"));
         }
@@ -108,7 +108,7 @@ class MainAdminController
         $htm = Contents::update("htm", $this->store);
         $htm->copy(Contents::retrieve("xml", $this->store));
         if ($this->store->commit()) {
-            return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported');
+            return Response::redirect($request->url()->with("action", "imported")->absolute());
         } else {
             return Response::create($this->view->message("fail", "message_import_failed"));
         }
@@ -130,7 +130,7 @@ class MainAdminController
         $htm16 = Contents::fromXh16String($string, 3);
         $htm->copy($htm16);
         if ($this->store->commit()) {
-            return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported');
+            return Response::redirect($request->url()->with("action", "imported")->absolute());
         } else {
             return Response::create($this->view->message("fail", "message_import_failed"));
         }
