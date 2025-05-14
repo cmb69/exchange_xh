@@ -54,7 +54,7 @@ class MainAdminControllerTest extends TestCase
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=export",
         ]);
         $response = $this->sut()($request);
-        $this->assertSame("not authorized", $response->output());
+        $this->assertStringContainsString("You are not authorized for this action!", $response->output());
     }
 
     public function testReportsFailureToExport(): void
@@ -101,7 +101,7 @@ class MainAdminControllerTest extends TestCase
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=import",
         ]);
         $response = $this->sut()($request);
-        $this->assertSame("not authorized", $response->output());
+        $this->assertStringContainsString("You are not authorized for this action!", $response->output());
     }
 
     public function testReportsFailureToImport(): void
@@ -148,7 +148,7 @@ class MainAdminControllerTest extends TestCase
             "url" => "http://example.com/?&exchange&admin=plugin_main&action=import16",
         ]);
         $response = $this->sut()($request);
-        $this->assertSame("not authorized", $response->output());
+        $this->assertStringContainsString("You are not authorized for this action!", $response->output());
     }
 
     public function testReportsFailureToImportXh16(): void

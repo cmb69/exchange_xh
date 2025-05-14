@@ -83,7 +83,7 @@ class MainAdminController
     private function exportAction(Request $request): Response
     {
         if (!$this->csrfProtector->check($request->post("exchange_token"))) {
-            return Response::create("not authorized"); // TODO i18n
+            return Response::create($this->view->message("fail", "error_unauthorized"));
         }
         $xml = Contents::update("xml", $this->store);
         $xml->copy(Contents::retrieve("htm", $this->store));
@@ -103,7 +103,7 @@ class MainAdminController
     private function importAction(Request $request): Response
     {
         if (!$this->csrfProtector->check($request->post("exchange_token"))) {
-            return Response::create("not authorized"); // TODO i18n
+            return Response::create($this->view->message("fail", "error_unauthorized"));
         }
         $htm = Contents::update("htm", $this->store);
         $htm->copy(Contents::retrieve("xml", $this->store));
@@ -123,7 +123,7 @@ class MainAdminController
     private function import16Action(Request $request): Response
     {
         if (!$this->csrfProtector->check($request->post("exchange_token"))) {
-            return Response::create("not authorized"); // TODO i18n
+            return Response::create($this->view->message("fail", "error_unauthorized"));
         }
         $htm = Contents::update("htm", $this->store);
         $string = (string) @file_get_contents($this->store->folder() . "/content.1.6.htm");

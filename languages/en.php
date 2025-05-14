@@ -12,6 +12,7 @@ $plugin_tx['exchange']['message_no_import']="\"content.xml\" not found, so there
 $plugin_tx['exchange']['message_no_16_import']="\"content1.6.htm\" not found, so there is nothing to import.";
 $plugin_tx['exchange']['message_imported']="The contents have been imported.";
 $plugin_tx['exchange']['message_import_failed']="Importing the contents failed!";
+$plugin_tx['exchange']['error_unauthorized']="You are not authorized for this action!";
 $plugin_tx['exchange']['syscheck_extension']="the PHP extension '%s' is loaded";
 $plugin_tx['exchange']['syscheck_fail']="failure";
 $plugin_tx['exchange']['syscheck_message']="Checking that %1\$s … %2\$s";
