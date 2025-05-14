@@ -23,7 +23,7 @@ jobs:
         with:
           repository: cmsimple-xh/cmsimple-xh
           ref: '1.8.0'
-          path: cmsimple
+          path: cmsimplexh
       - name: Checkout Plib_XH
         uses: actions/checkout@v4
         with:
