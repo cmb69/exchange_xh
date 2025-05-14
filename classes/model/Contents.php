@@ -67,6 +67,17 @@ final class Contents implements Document
         $this->extension = $extension;
     }
 
+    public function pageCount(): int
+    {
+        return count($this->pages);
+    }
+
+    public function page(int $index): Page
+    {
+        assert($index >= 0 && $index < $this->pageCount());
+        return $this->pages[$index];
+    }
+
     /** @param array<string,string> $data */
     public function appendPage(string $title, array $data, string $content): Page
     {

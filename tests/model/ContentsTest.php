@@ -55,4 +55,14 @@ class ContentsTest extends TestCase
         $this->assertStringContainsString("Start3", $actual);
         $this->assertStringContainsString("Start4", $actual);
     }
+
+    public function testReadsTwoConsecutiveLevel1Pages(): void
+    {
+        $sut = new Contents("htm");
+        $sut->appendPage("First", [], "<h1>First</h1>");
+        $sut->appendPage("Second", [], "<h1>Second</h1>");
+        $actual = Contents::fromString($sut->toString(), "content.htm");
+        $this->assertSame(2, $actual->pageCount());
+        $this->assertSame(1, $actual->page(1)->level());
+    }
 }

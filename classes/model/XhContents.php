@@ -39,9 +39,13 @@ trait XhContents
             if ($level > $prevLevel) {
                 $parent = empty($that->pages) ? null : $that->peekPage();
             } else {
-                do {
+                while (true) {
+                    $page = $that->peekPage();
+                    if (($page->level() < max(2, $level))) {
+                        break;
+                    }
                     $page = $that->popPage();
-                } while ($page->level() > max(2, $level));
+                };
                 $parent = $level === 1 ? null : $that->peekPage();
             }
             $page = Page::fromXhString($parent, $title, $rest);
