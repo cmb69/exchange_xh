@@ -82,16 +82,18 @@
     <!-- description of the plugin, ca. 200 characters, you can use <br/>, <ol></ol>, <ul></ul>, <li></li>, <b></b>, <i></i>. -->
     <description lang="en">
       Exchange_XH facilitates exporting and importing the contents of a
-      CMSimple_XH website to and from XML, respectively.
-      This may be helpful for the migration to or from other CMSs,
-      and also for migrating between CMSimple_XH versions.
+      CMSimple_XH website to and from XML, respectively.  This may be helpful for
+      the migration to or from other content management systems.
+      The plugin also supports importing the contents of CMSimple_XH 1.6.x
+      into CMSimple_XH ≥ 1.7.0.
     </description>
     <!-- Beschreibung des Plugins, ca. 200 Zeichen, es können <br/>, <ol></ol>, <ul></ul>, <li></li>, <b></b>, <i></i> genutzt werden. -->
     <description lang="de">
       Exchange_XH ermöglicht den Export und Import der Inhalte einer CMSimple_XH
-      Website nach beziehungsweise von XML.
-      Dies kann nützlich für die Migration zu und von anderen CMSen sein,
-      und ebenfalls für die Migration zwischen CMSimple_XH Versionen.
+      Website nach beziehungsweise von XML. Dies kann nützlich für die Migration
+      zu und von anderen Content-Management-Systemen sein.
+      Weiterhin unterstützt das Plugin den Import von CMSimple_XH 1.6.x Inhalten
+      in CMSimple_XH ≥ 1.7.0.
     </description>
     <!-- additional languages are possible, i.e. da, fr, pl, ... -->
     <!-- The use of this language is limited by the website where the repository is hosted. -->
