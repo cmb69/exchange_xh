@@ -51,12 +51,12 @@ trait XmlPage
     public function createPageElement(DOMDocument $doc): DOMElement
     {
         $elt = $doc->createElement('page');
-        $elt->setAttribute('title', $this->title);
+        $elt->setAttribute('title', $this->filter($this->title));
         // do we need the URL?
         // $page->setAttribute('url', $this->pages->url($pageIndex));
         $elt->appendChild($this->createPageDataElement($doc, $this->data));
         $content = $doc->createElement('content');
-        $cdata = $doc->createCDATASection($this->content);
+        $cdata = $doc->createCDATASection($this->filter($this->content));
         $content->appendChild($cdata);
         $elt->appendChild($content);
         foreach ($this->children as $page) {
@@ -70,8 +70,13 @@ trait XmlPage
     {
         $element = $doc->createElement('data');
         foreach ($pageData as $key => $value) {
-            $element->setAttribute($key, $value);
+            $element->setAttribute($this->filter($key), $this->filter($value));
         }
         return $element;
+    }
+
+    private function filter(string $string): string
+    {
+        return (string) preg_replace('/[\x00-\x08\x0b-\x0c\x0e-\x1f]/u', "", $string);
     }
 }

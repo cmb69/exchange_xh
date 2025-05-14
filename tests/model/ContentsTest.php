@@ -43,4 +43,16 @@ class ContentsTest extends TestCase
         $actual = Contents::fromString($expected->toString(), "content.xml");
         $this->assertEquals($expected, $actual);
     }
+
+    /** @see <https://github.com/cmb69/exchange_xh/issues/12> */
+    public function testFiltersInvalidControlWhenSerializingXml(): void
+    {
+        $sut = new Contents("xml");
+        $sut->appendPage("Start\x011", ["start\x0b2" => "Start\x1b3"], "<h1>Start\x1f4</h1>");
+        $actual = $sut->toString();
+        $this->assertStringContainsString("Start1", $actual);
+        $this->assertStringContainsString("start2", $actual);
+        $this->assertStringContainsString("Start3", $actual);
+        $this->assertStringContainsString("Start4", $actual);
+    }
 }
