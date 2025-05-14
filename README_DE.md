@@ -12,6 +12,7 @@ in CMSimple_XH ≥ 1.7.0.
 - [Installation](#installation)
 - [Einstellungen](#einstellungen)
 - [Verwendung](#verwendung)
+  - [Import von alten CMSimple_XH Inhalten](#import-von-alten-cmsimple_xh-inhalten)
 - [Einschränkungen](#einschränkungen)
 - [Problembehebung](#problembehebung)
 - [Lizenz](#lizenz)
@@ -114,6 +115,8 @@ lassen möchten (also legen Sie zuvor ein Backup an).
 
 Bei mehrsprachigen Websites muss der Inhalt jeder Sprache separat importiert
 und exportiert werden.
+
+### Import von alten CMSimple_XH Inhalten
 
 Um Inhalte von CMSimple_XH 1.6.x zu importieren, muss die alte `content.htm`
 in `content.1.6.htm` umbenannt, und im `content/` Ordner der neuen

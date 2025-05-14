@@ -11,6 +11,7 @@ into CMSimple_XH ≥ 1.7.0.
 - [Installation](#installation)
 - [Settings](#settings)
 - [Usage](#usage)
+  - [Import old CMSimple_XH Contents](#import-old-cmsimple_xh-contents)
 - [Limitations](#limitations)
 - [Troubleshooting](#troubleshooting)
 - [License](#license)
@@ -112,6 +113,8 @@ the import.
 
 For multilingual websites, each language content has to be imported and
 exported separately.
+
+### Import old CMSimple_XH Contents
 
 To import the contents of CMSimple_XH 1.6.x, you need to rename the old
 `content.htm` to `content.1.6.htm`, and put it in the `content/` folder of
