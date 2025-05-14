@@ -87,11 +87,10 @@ class MainAdminController
         }
         $xml = Contents::update("xml", $this->store);
         $xml->copy(Contents::retrieve("htm", $this->store));
-        if ($this->store->commit()) {
-            return Response::redirect($request->url()->with("action", "exported")->absolute());
-        } else {
+        if (!$this->store->commit()) {
             return Response::create($this->view->message("fail", "message_export_failed"));
         }
+        return Response::redirect($request->url()->with("action", "exported")->absolute());
     }
 
     private function exportedAction(): Response
@@ -107,11 +106,10 @@ class MainAdminController
         }
         $htm = Contents::update("htm", $this->store);
         $htm->copy(Contents::retrieve("xml", $this->store));
-        if ($this->store->commit()) {
-            return Response::redirect($request->url()->with("action", "imported")->absolute());
-        } else {
+        if (!$this->store->commit()) {
             return Response::create($this->view->message("fail", "message_import_failed"));
         }
+        return Response::redirect($request->url()->with("action", "imported")->absolute());
     }
 
     private function importedAction(): Response
@@ -129,10 +127,9 @@ class MainAdminController
         $string = (string) @file_get_contents($this->store->folder() . "/content.1.6.htm");
         $htm16 = Contents::fromXh16String($string, 3);
         $htm->copy($htm16);
-        if ($this->store->commit()) {
-            return Response::redirect($request->url()->with("action", "imported")->absolute());
-        } else {
+        if (!$this->store->commit()) {
             return Response::create($this->view->message("fail", "message_import_failed"));
         }
+        return Response::redirect($request->url()->with("action", "imported")->absolute());
     }
 }
