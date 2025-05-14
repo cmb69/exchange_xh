@@ -30,7 +30,7 @@
 </head>
 <body>
 <h1 id="exchange_xh">Exchange_XH</h1>
-<p>Exchange_XH facilitates exporting and importing the contents of a CMSimple_XH website to and from XML, respectively. This may be helpful for the migration to or from other CMSs, and also for migrating between CMSimple_XH versions.</p>
+<p>Exchange_XH facilitates exporting and importing the contents of a CMSimple_XH website to and from XML, respectively. This may be helpful for the migration to or from other CMSs. The plugin also supports importing the contents of CMSimple_XH 1.6.x into CMSimple_XH ≥ 1.7.0.</p>
 <ul>
 <li><a href="#requirements">Requirements</a></li>
 <li><a href="#download">Download</a></li>
@@ -103,9 +103,9 @@ mouse. -->
 <span id="cb1-35"><a href="#cb1-35"></a><span class="kw">&lt;/grammar&gt;</span></span></code></pre></div>
 </details>
 <p>For multilingual websites, each language content has to be imported and exported separately.</p>
-<p>To migrate between CMSimple_XH versions, at first the plugin has to be installed in the old version, and all language contents have to be exported. Then the plugin has to be installed in the new version, the language contents have to be copied to their appropriate places in the new version, and all language contents have to be imported.</p>
+<p>To import the contents of CMSimple_XH 1.6.x, you need to rename the old <code>content.htm</code> to <code>content.1.6.htm</code>, and put it in the <code>content/</code> folder of the new CMSimple_XH installation. Then go to <code>Plugins</code> → <code>Import/Export</code> and press the <code>Import</code> button in the <code>Import CMSimple_XH 1.6 contents</code> section. For multilingual websites, this needs to be done for each language.</p>
 <h2 id="limitations">Limitations</h2>
-<p>Additional markup of page headings will silently be stripped during export.</p>
+<p>When importing old CMSimple_XH 1.6.x contents, only the most basic adjustments are made, but the HTML headings are not changed in any way. You may want to do this manually after importing, so that your pages have a proper HTML heading outline.</p>
 <h2 id="troubleshooting">Troubleshooting</h2>
 <p>Report bugs and ask for support either on <a href="https://github.com/cmb69/exchange_xh/issues">Github</a> or in the <a href="https://cmsimpleforum.com/">CMSimple_XH Forum</a>.</p>
 <h2 id="license">License</h2>

@@ -62,6 +62,8 @@ class MainAdminController
                 return $this->importAction($request);
             case "imported":
                 return $this->importedAction();
+            case "import16":
+                return $this->import16Action($request);
         }
     }
 
@@ -71,8 +73,10 @@ class MainAdminController
         return Response::create($this->view->render("main", [
             "export_url" => $url->with("action", "export")->relative(),
             "import_url" => $url->with("action", "import")->relative(),
+            "import16_url" => $url->with("action", "import16")->relative(),
             "csrfToken" => $this->csrfProtector->token(),
             "hasXmlFile" => !empty($this->store->find('/^content\.xml$/')),
+            "has16File" => !empty($this->store->find('/^content\.1\.6\.htm$/')),
         ]))->withTitle($this->view->text("menu_main"));
     }
 
@@ -114,5 +118,21 @@ class MainAdminController
     {
         return Response::create($this->view->message("success", "message_imported"))
             ->withTitle($this->view->text("menu_main"));
+    }
+
+    private function import16Action(Request $request): Response
+    {
+        if (!$this->csrfProtector->check($request->post("exchange_token"))) {
+            return Response::create("not authorized"); // TODO i18n
+        }
+        $htm = Contents::update("htm", $this->store);
+        $string = (string) @file_get_contents($this->store->folder() . "/content.1.6.htm");
+        $htm16 = Contents::fromXh16String($string, 3);
+        $htm->copy($htm16);
+        if ($this->store->commit()) {
+            return Response::redirect(CMSIMPLE_URL . '?&exchange&admin=plugin_main&action=imported&normal');
+        } else {
+            return Response::create($this->view->message("fail", "message_import_failed"));
+        }
     }
 }

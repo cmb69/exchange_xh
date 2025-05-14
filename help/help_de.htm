@@ -30,7 +30,7 @@
 </head>
 <body>
 <h1 id="exchange_xh">Exchange_XH</h1>
-<p>Exchange_XH ermöglicht den Export und Import der Inhalte einer CMSimple_XH Website nach beziehungsweise von XML. Dies kann nützlich für die Migration zu und von anderen CMSen sein, und ebenfalls für die Migration zwischen CMSimple_XH Versionen.</p>
+<p>Exchange_XH ermöglicht den Export und Import der Inhalte einer CMSimple_XH Website nach beziehungsweise von XML. Dies kann nützlich für die Migration zu und von anderen CMSen sein. Weiterhin unterstützt das Plugin den Import von CMSimple_XH 1.6.x Inhalten in CMSimple_XH ≥ 1.7.0.</p>
 <ul>
 <li><a href="#voraussetzungen">Voraussetzungen</a></li>
 <li><a href="#download">Download</a></li>
@@ -103,9 +103,9 @@
 <span id="cb1-35"><a href="#cb1-35"></a><span class="kw">&lt;/grammar&gt;</span></span></code></pre></div>
 </details>
 <p>Bei mehrsprachigen Websites muss der Inhalt jeder Sprache separat importiert und exportiert werden.</p>
-<p>Um zwischen CMSimple_XH Versionen zu migrieren, installieren Sie das Plugin zunächst in der alten Version, und exportieren Sie die Inhalte aller Sprachen. Dann muss das Plugin in der neuen Version installiert werden, die zuvor exportierten Inhalte der Sprachen müssen an die passenden Stellen der neuen Version kopiert werden, und alle Sprach-Inhalte müssen importiert werden.</p>
+<p>Um Inhalte von CMSimple_XH 1.6.x zu importieren, muss die alte <code>content.htm</code> in <code>content.1.6.htm</code> umbenannt, und im <code>content/</code> Ordner der neuen CMSimple_XH Installation abgelegt werden. Unter <code>Plugins</code> → <code>Import/Export</code> kann dann im <code>Import von CMSimple_XH 1.6 Inhalten</code> Abschnitt der <code>Import</code> angestoßen werden. Für mehrsprachige Websites muss dies für jede Sprach durchgeführt werden.</p>
 <h2 id="einschränkungen">Einschränkungen</h2>
-<p>Zusätzliches Markup der Seitenüberschriften wird beim Export stillschweigend entfernt.</p>
+<p>Beim Import von alten CMSimple_XH 1.6.x Inhalten werden nur die grundsätzlichen Änderungen vorgenommen, aber die HTML-Headings werden nicht geändert. Es ist empfehlenswert dies nach dem Import manuell vorzunehmen, so dass die Seiten eine ordnungsgemäße HTML-Heading-Struktur aufweisen.</p>
 <h2 id="problembehebung">Problembehebung</h2>
 <p>Melden Sie Programmfehler und stellen Sie Supportanfragen entweder auf <a href="https://github.com/cmb69/exchange_xh/issues">Github</a> oder im <a href="https://cmsimpleforum.com/">CMSimple_XH Forum</a>.</p>
 <h2 id="lizenz">Lizenz</h2>

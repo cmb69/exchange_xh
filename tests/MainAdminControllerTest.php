@@ -141,4 +141,38 @@ class MainAdminControllerTest extends TestCase
             $response->output()
         );
     }
+
+    public function testXh16ImportIsCsrfProtected(): void
+    {
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&exchange&admin=plugin_main&action=import16",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertSame("not authorized", $response->output());
+    }
+
+    public function testReportsFailureToImportXh16(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        vfsStream::setQuota(0);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&exchange&admin=plugin_main&action=import16",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertStringContainsString("Importing the contents failed!", $response->output());
+    }
+
+    public function testSuccessfulXh16ImportRedirects(): void
+    {
+        $this->csrfProtector->method("check")->willReturn(true);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&exchange&admin=plugin_main&action=import16",
+        ]);
+        $response = $this->sut()($request);
+        $this->assertFileExists(vfsStream::url("root/content.htm"));
+        $this->assertSame(
+            "http://example.com/?&exchange&admin=plugin_main&action=imported&normal",
+            $response->location()
+        );
+    }
 }

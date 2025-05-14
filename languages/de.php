@@ -3,11 +3,13 @@
 $plugin_tx['exchange']['menu_main']="Import/Export";
 $plugin_tx['exchange']['label_export']="Export";
 $plugin_tx['exchange']['label_import']="Import";
+$plugin_tx['exchange']['label_import_16']="Import von CMSimple_XH 1.6 Inhalten";
 $plugin_tx['exchange']['message_export_overwrite']="Beim Exportieren wird die bestehende Datei \"content.xml\" überschrieben!";
 $plugin_tx['exchange']['message_exported']="Die aktuelle Content-Datei wurde exportiert.";
 $plugin_tx['exchange']['message_export_failed']="Der Inhalt konnte nicht exportiert werden!";
 $plugin_tx['exchange']['message_import_overwrite']="Beim Importieren wird der aktuelle Content überschrieben!";
 $plugin_tx['exchange']['message_no_import']="\"content.xml\" wurde nicht gefunden, so dass der Import nicht möglich ist.";
+$plugin_tx['exchange']['message_no_16_import']="\"content.1.6.htm\" wurde nicht gefunden, so dass der Import nicht möglich ist.";
 $plugin_tx['exchange']['message_imported']="Der Inhalt wurde importiert.";
 $plugin_tx['exchange']['message_import_failed']="Der Inhalt konnte nicht importiert werden!";
 $plugin_tx['exchange']['syscheck_extension']="die PHP-Erweiterung '%s' geladen ist";

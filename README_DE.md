@@ -2,8 +2,10 @@
 
 Exchange_XH ermöglicht den Export und Import der Inhalte einer CMSimple_XH
 Website nach beziehungsweise von XML. Dies kann nützlich für die Migration
-zu und von anderen CMSen sein, und ebenfalls für die Migration zwischen
-CMSimple_XH Versionen.
+zu und von anderen CMSen sein.
+Weiterhin unterstützt das Plugin den Import von CMSimple_XH 1.6.x Inhalten
+in CMSimple_XH ≥ 1.7.0.
+
 
 - [Voraussetzungen](#voraussetzungen)
 - [Download](#download)
@@ -113,17 +115,19 @@ lassen möchten (also legen Sie zuvor ein Backup an).
 Bei mehrsprachigen Websites muss der Inhalt jeder Sprache separat importiert
 und exportiert werden.
 
-Um zwischen CMSimple_XH Versionen zu migrieren, installieren Sie das Plugin
-zunächst in der alten Version, und exportieren Sie die Inhalte aller
-Sprachen. Dann muss das Plugin in der neuen Version installiert werden, die
-zuvor exportierten Inhalte der Sprachen müssen an die passenden Stellen der
-neuen Version kopiert werden, und alle Sprach-Inhalte müssen importiert
-werden.
+Um Inhalte von CMSimple_XH 1.6.x zu importieren, muss die alte `content.htm`
+in `content.1.6.htm` umbenannt, und im `content/` Ordner der neuen
+CMSimple_XH Installation abgelegt werden. Unter `Plugins` → `Import/Export`
+kann dann im `Import von CMSimple_XH 1.6 Inhalten` Abschnitt der `Import`
+angestoßen werden.  Für mehrsprachige Websites muss dies für jede Sprach
+durchgeführt werden.
 
 ## Einschränkungen
 
-Zusätzliches Markup der Seitenüberschriften wird beim Export stillschweigend
-entfernt.
+Beim Import von alten CMSimple_XH 1.6.x Inhalten werden nur die grundsätzlichen
+Änderungen vorgenommen, aber die HTML-Headings werden nicht geändert. Es ist
+empfehlenswert dies nach dem Import manuell vorzunehmen, so dass die Seiten
+eine ordnungsgemäße HTML-Heading-Struktur aufweisen.
 
 ## Problembehebung
 
